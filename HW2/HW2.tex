@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage[export]{adjustbox}
+
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\proof}[1]{\textbf{Proof: #1}}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+\newcommand{\inte}[0]{\text{int}}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+  \item $9\cdot 10^6 = 9,000,000$ seven-digit phone numbers. %because 9 choices for the first number, and 10 choices each for the next 6.
+  \item \begin{enumerate}
+    \item $8! = 40320$ seatings %which is all arrangements 8 people.
+    \item $5!\cdot 4 \cdot 3! = 2880$ consecutive male seatings. %because there are $5!$ ways the men can sit
+    \item $4!\cdot 2^4 = 384$ consecutive couples seatings. %the arrangements of the couples by their swaps
+  \end{enumerate}
+  \item $6m, 7s, 4e \to 2$ books
+  \begin{enumerate}
+    \item $\binom{6}{2} + \binom{7}{2} + \binom{4}{2} = 42$ choices of the two books who share the same subject. %sum of choosing 2 at a time from each book set
+    \item $\binom{6}{1}\binom{7}{1} + \binom{6}{1}\binom{4}{1} + \binom{7}{1}\binom{4}{1} = 94$ choices of two books who don't share the same subject. %sum of products of choosing two books from each set
+  \end{enumerate}
+  \item $8w, 6m \to 3w, 3m$
+  \begin{enumerate}
+    \item $\binom{8}{3}[\binom{6}{3} - \binom{4}{1}] = 896$ committees where $m_1, m_2$ don't work together.
+    \item $\binom{6}{3}[\binom{8}{3} - \binom{6}{1}] = 1000$ committees where $w_1, w_2$ don't work together.
+    \item $\binom{8}{3}\binom{6}{3} - P^7_3 = 910$ committees where $w_1, m_1$ don't work together.%P^7_3 = committees where w1,m1 work together
+    \footnote{$P^7_3$ is a simplification of the number of committees where $w_1, m_1$ work together.}
+  \end{enumerate}
+  \item Let $D_6 = \set{1,2,3,4,5,6},A =$ rolling $1\ldots 6$ in any order, and $|S| = |D_6|^6$.\\
+  If the point $r_1 = (1,2,3,4,5,6) \in A \implies$other points in $A$ must be arrangements of $r_1 \implies |A| = |D_6|!$\\
+  $\therefore P(A) = \frac{|A|}{|S|} = \frac{6!}{6^6} \approx 0.015$
+  \item $|S| = \binom{10}{5}, |A| = \binom{6}{5} \implies P(A) = \frac{|A|}{|S|} \approx 0.02$
+  \item 
+  \item $52$ cards $\to$ 5 cards; $|S| = \binom{52}{5}$ \begin{enumerate}
+    \item $P(3A, 2K) = \frac{\binom{4}{3}\binom{4}{2}}{\binom{52}{5}} \approx 0.000009$
+    \item $P(3R_1, 2R_2) = $
+  \end{enumerate}
+  \item 
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,141 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage[export]{adjustbox}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\proof}[1]{\textbf{Proof: #1}}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+\newcommand{\inte}[0]{\text{int}}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item $A = A \cap S, S = B\cup B^c$
+    \begin{enumerate}
+      \item \proof{}$A = (A\cap B) \cup (A \cap B^c)$\\
+      $(A\cap B) \cup (A\cap B^c)\\
+      = A\cap (B\cup B^c) \text{ (Distributive Law)}\\
+      = A\cap S \text{ (Definition of a complement) }\\
+      = A$\\
+      \includegraphics*[height=1.25in]{VD1A.png}
+      \item \proof{} $B\subseteq A \implies A = B\cup (A\cap B^c)$\\
+      $B\cup (A\cap B^c)\\
+      = (B\cup A)\cap(B\cup B^c) \text{ (Distributive)}\\
+      = (B\cup A) \cap S \text{ (Definition of a complement)}\\
+      = A \cap S\\ 
+      = A$\\
+      \includegraphics*[height=1.25in]{VD1B.png}
+    \end{enumerate}
+    \item \begin{enumerate}
+      \item \proof{}${P(A) = P(A\cap B) + P(A\cap B^c)}$\\
+      We know $A = A \cap (B\cup B^c) = A\cap S = A \implies P(A) = P(A\cap (B\cup B^c))$. (Axiom)\\
+      Thus $P(A) = P((A \cap B) \cup (A \cap B^c))$. (distributive)\\
+      $B, B^c$ are disjoint$\implies A\cap B, A\cap B^c$ are also disjoint.\\
+      $\therefore P(A) = P(A\cap B) + P(A\cap B^c)$.
+
+      \item \proof{}$P(A\cap B) = P(B) - P(A^c \cap B)$\\
+      $P(B) = P(A\cap B) + P(A^c\cap B)$ (From 2a)\\
+      $P(A\cap B) = P(A\cap B) + P(A^c\cap B) - P(A^c \cap B) \iff P(A\cap B) = P(A\cap B)$
+
+      \item If $B\subseteq A \implies P(A) = P(B) + P(A\cap B^c)$\\
+      \counter{}Let $S = \set{1,2\cdots 10}, A = \set{1,2,3}, B = \set{1}$\\
+      $P(B) + P(A\cap B^c) = \frac{3}{10} + \frac{2}{10} \neq P(A) = \frac{3}{10}$\\
+    \end{enumerate}
+    \item \begin{enumerate}
+      \item $A\cap B$
+      \item $A\cup B$
+      \item $(A\cap B)^c$
+      \item $(A\cap B^c) \cup (A^c \cap B)$
+    \end{enumerate}
+
+    \item \begin{enumerate}
+      \item $\sum_{i=1}^{5}E_i = 1 \implies P(E_4) = 0.3, P(E_5) = 0.15 $
+      \item $P(E_1) = 0.3 \implies P(E_2) = 0.1 \implies P(E_{3...5}) = 0.2$
+    \end{enumerate}
+    
+    \newpage
+
+    \item $P(s) = 8\%, P(b) = 6\%, P(s \cap b) = 2\%$ 
+    \begin{enumerate}
+      \item $P(b) = 6\%$
+      \item $P(b \cup s) = P(b) + P(s) - P(s \cap b) = 12\%$
+      \item $P(b \cap s^c) + P(s \cap b^c)\\
+      = [P(b) - P(b^c \cap s^c)] + [P(s) - P(s^c\cap b^c)] \text{ (from 2a)}\\
+      = P(b) + P(s) - 2P(s^c\cap b^c)\\\
+      = P(b) + P(s) - 2P(s \cup b) = 10\%$
+    \end{enumerate}
+    
+    \item $P(H) = 70\%, P(D) = 30\%, P(H - D) = P(H \cap D^c) = 60\%$\\
+    $P(D - H) = P(D \cap H^c)\\
+    = P(D) + P(H^c) - P(D\cup H^c)\\
+    = 60\% - (100\% - P(H\cap D^c)) = 20\%$
+    
+    \item \begin{enumerate}
+      \item $S = \set{\text{HH, HT, TH, TT}}$
+      \item Yes, all points are equally likely. Each one has a $25\%$ probability.
+      \item $A = \set{\text{HT, TH}}, B = \set{\text{HH, HT, TH}}$
+      \item \begin{enumerate}
+        \item $P(A) = \frac{2}{4}$
+        \item $P(B) = \frac{3}{4}$
+        \item $P(A\cap B) = \frac{2}{4}$
+        \item $P(A\cup B) = \frac{3}{4}$
+        \item $P(A^c \cup B) = \frac{1}{4}$
+      \end{enumerate}
+    \end{enumerate}
+    \item \begin{enumerate}
+      \item $S = \set{\\
+    (V_1, V_1), (V_1, V_2), (V_1, V_3),\\
+    (V_2, V_1), (V_2, V_2), (V_2, V_3),\\
+    (V_3, V_1), (V_3, V_2), (V_3, V_3)
+    \\}$
+    \item All points are equally likely. Thus each is $\frac{1}{9}$.
+    \item $A = \set{(V_1, V_1), (V_2, V_2), (V_3, V_3)}, B = \set{(V_1, V_2), (V_2, V_1), (V_2, V_2), (V_2, V_3), (V_3, V_2)}$
+      \begin{enumerate}
+        \item $P(A) = \frac{3}{9}$
+        \item $P(B) = \frac{5}{9}$
+        \item $P(A\cup B) = \frac{7}{9}$
+        \item $P(A \cap B) = \frac{1}{9}$
+      \end{enumerate}
+    \end{enumerate}
+    \item \begin{enumerate}
+      \item Let $a$ be the member of the minority group.\\
+      $S = \set{\set{a,b}, \set{a,c}, \set{a,d}, \set{b,c}, \set{b,d}, \set{c,d}}$
+      \item All points are equally likely, thus each event has probability $\frac{1}{6}$.
+      \item $P(a) = \frac{3}{6}$
+    \end{enumerate}
+    \item \proof{}$A_1, A_2, \ldots$ is a partition of $S$, and $B \subseteq S \implies P(B) = \sum_{i=1}^{\infty} P(B\cap A_i)$\\
+    $(\forall i,j)A_i, A_j$ are disjoint $\implies B\cap A_i, B\cap A_j$ are disjoint and thus have no overlap.\\
+    If $A_i, A_j$ were not disjoint, then it would not form a partition of $S$, which would contradict the given information.\\
+    $\therefore P(B) = \sum_{i=1}^{\infty}P(B\cap A_i)$.
+\end{enumerate}
+
+
+\end{document}
