@@ -30,7 +30,8 @@
   \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
 \newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
   \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
-
+  
+\newcommand{\pr}[1]{\operatorname{P}(#1)}
 
 \title{\MakeUppercase{\jobname}}
 \author{Justin Nguyen}
@@ -60,14 +61,50 @@
   \end{enumerate}
   \item Let $D_6 = \set{1,2,3,4,5,6},A =$ rolling $1\ldots 6$ in any order, and $|S| = |D_6|^6$.\\
   If the point $r_1 = (1,2,3,4,5,6) \in A \implies$other points in $A$ must be arrangements of $r_1 \implies |A| = |D_6|!$\\
-  $\therefore P(A) = \frac{|A|}{|S|} = \frac{6!}{6^6} \approx 0.015$
-  \item $|S| = \binom{10}{5}, |A| = \binom{6}{5} \implies P(A) = \frac{|A|}{|S|} \approx 0.02$
+  $\therefore \pr{A} = \frac{6!}{6^6} \approx 0.015$
+  \item $|S| = \binom{10}{5}, |A| = \binom{6}{5} \implies \pr{A} = \frac{|A|}{|S|} \approx 0.02$
   \item 
   \item $52$ cards $\to$ 5 cards; $|S| = \binom{52}{5}$ \begin{enumerate}
-    \item $P(3A, 2K) = \frac{\binom{4}{3}\binom{4}{2}}{\binom{52}{5}} \approx 0.000009$
-    \item $P(3R_1, 2R_2) = $
+    \item $\pr{3A, 2K} = \frac{\binom{4}{3}\binom{4}{2}}{\binom{52}{5}} \approx 0.000009$
+    \item $\pr{3R_n, 2R_k} = $ TODO
   \end{enumerate}
-  \item 
+  \item $2w, 4h, 7a \to 1w, 2h, 3a$\\
+  $|S| = P^{13}_6$
+  \item \begin{enumerate}
+    \item Fluke $=\binom{5}{1}\binom{4}{1}\binom{3}{1}\binom{2}{1}\binom{1}{1} = 120$ arrangements.
+    \item Propose $= \binom{7}{2}\binom{5}{1}\binom{4}{2}\binom{2}{1}\binom{1}{1} = 1260$ arrangements.
+    \item Mississippi = $\binom{11}{1}\binom{10}{4}\binom{6}{4}\binom{2}{2} = 34650$ arrangements.
+  \end{enumerate}
+  \item 11
+  \item 12
+  
+  \newpage
+  \item \proof{}$\sum_{k=0}^{n}\binom{n}{k} = 2^n$\\
+  The Binomial Theorem states that $(x+y)^n = \sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^k$.\\
+  Then, let $x=y=1 \implies (1+1)^n = \sum_{k=0}^{n}\binom{n}{k}1^{n-k}1^k = \sum_{k=0}^{n}\binom{n}{k}1^n = \sum_{k=0}^{n}\binom{n}{k}$.\\
+  $\therefore 2^n = \sum_{k=0}^{n}\binom{n}{k}$.
+  
+  \item \proof{} $\sum_{k=0}^{n>0}(-1)^k\binom{n}{k} = 0$\\
+  \textbf{Case} $n=1$:\\
+  \[\sum_{k=0}^{1}(-1)^k\binom{1}{k} = (-1)^0\binom{1}{0} + (-1)^1\binom{1}{1} = 0\]
+  
+  \textbf{Case} $n = n + 1$:\\
+  Note that $(\forall \alpha, \beta \in\ns{N})$ and $\alpha \geq \beta$
+  \begin{itemize}
+    \item $\binom{\alpha}{0} = \binom{\alpha}{\alpha} = 1$
+    \item $\binom{\alpha}{1} = \binom{\alpha}{\alpha - 1} = \alpha$
+    \item $\binom{\alpha}{\beta} = \binom{\alpha}{\alpha - \beta}$
+  \end{itemize}
+  Assume that $\sum_{k=0}^{n>0}(-1)^k\binom{n}{k} = 0$. Then $n+1$ is:
+  \[\sum_{k=0}^{n+1}(-1)^k\binom{n+1}{k} =\]
+
+  \[(-1)^0\binom{n+1}{0} + (-1)^1\binom{n+1}{1} + 
+  \ldots + (-1)^{n+1-k}\binom{n+1}{n+1-k} + \ldots + (-1)^k\binom{n+1}{k} + \ldots +
+  (-1)^{n}\binom{n+1}{n} + (-1)^{n+1}\binom{n+1}{n + 1}\]\\
+  We rearrange the terms.
+  \[(-1)^0\binom{n+1}{0} + (-1)^{n+1}\binom{n+1}{n+1}  + \ldots
+  + (-1)^{n+1-k}\binom{n+1}{n+1-k} + (-1)^k\binom{n+1}{k} + \ldots
+  + (-1)^1\binom{n+1}{1} + (-1)^n\binom{n+1}{n}\]
 \end{enumerate}
 
 \end{document}
