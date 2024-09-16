@@ -42,16 +42,19 @@
 
 \begin{enumerate}
   \item $9\cdot 10^6 = 9,000,000$ seven-digit phone numbers. %because 9 choices for the first number, and 10 choices each for the next 6.
+  
   \item \begin{enumerate}
     \item $8! = 40320$ seatings %which is all arrangements 8 people.
     \item $5!\cdot 4 \cdot 3! = 2880$ consecutive male seatings. %because there are $5!$ ways the men can sit
     \item $4!\cdot 2^4 = 384$ consecutive couples seatings. %the arrangements of the couples by their swaps
   \end{enumerate}
+  
   \item $6m, 7s, 4e \to 2$ books
   \begin{enumerate}
     \item $\binom{6}{2} + \binom{7}{2} + \binom{4}{2} = 42$ choices of the two books who share the same subject. %sum of choosing 2 at a time from each book set
     \item $\binom{6}{1}\binom{7}{1} + \binom{6}{1}\binom{4}{1} + \binom{7}{1}\binom{4}{1} = 94$ choices of two books who don't share the same subject. %sum of products of choosing two books from each set
   \end{enumerate}
+  
   \item $8w, 6m \to 3w, 3m$
   \begin{enumerate}
     \item $\binom{8}{3}[\binom{6}{3} - \binom{4}{1}] = 896$ committees where $m_1, m_2$ don't work together.
@@ -59,47 +62,63 @@
     \item $\binom{8}{3}\binom{6}{3} - P^7_3 = 910$ committees where $w_1, m_1$ don't work together.%P^7_3 = committees where w1,m1 work together
     \footnote{$P^7_3$ is a simplification of the number of committees where $w_1, m_1$ work together.}
   \end{enumerate}
+  
   \item Let $D_6 = \set{1,2,3,4,5,6},A =$ rolling $1\ldots 6$ in any order, and $|S| = |D_6|^6$.\\
   If the point $r_1 = (1,2,3,4,5,6) \in A \implies$other points in $A$ must be arrangements of $r_1 \implies |A| = |D_6|!$\\
-  $\therefore \pr{A} = \frac{6!}{6^6} \approx 0.015$
-  \item $|S| = \binom{10}{5}, |A| = \binom{6}{5} \implies \pr{A} = \frac{|A|}{|S|} \approx 0.02\ldots$
+  $\therefore \pr{A} = \frac{6!}{6^6} = \frac{5}{324} \approx 0.015\ldots$
+  
+  \item $|S| = \binom{10}{5}$ because the professor chooses 5 questions from 10\\
+  $|A| = \binom{6}{5}$ because she chose to study 6 questions, and 5 are on the test\\
+  $\therefore \pr{A} = \frac{|A|}{|S|} = \frac{1}{42} \approx 0.02\ldots$
+  
   \item $4s_w, 2s_b, 6s_r, 3s_g \to 4s$\\
-  $|S| = \binom{15}{4}$
+  $|S| = \binom{15}{4}$ which is all choices of 15 socks taken 4 at a time.
   \begin{enumerate}
-    \item $P(2s_1, 2s_2) = \frac{
+    \item We want all possible one color two sock pairs, with another color two sock pairs.\\
+    $P(2s_1, 2s_2) = \frac{
       \binom{4}{2}[\binom{2}{2} + \binom{6}{2} + \binom{3}{2}] +
       \binom{2}{2}[\binom{6}{2} + \binom{3}{2}] +
       \binom{6}{2}\binom{3}{2}}
       {\binom{15}{4}} = \frac{177}{1365} \approx 0.13$
-    \item $P(1s_r) = 1 - P(\text{no reds}) = 1 - \frac{P_4^{9}}{P_4^{15}} \approx 0.91$
+    \item At least one red sock is the same as the complement of no red socks.\\
+    $P(1s_r) = 1 - P(\text{no reds}) = 1 - \frac{P_4^{9}}{P_4^{15}} = \frac{59}{65} \approx 0.91$
   \end{enumerate}
-  \item $52$ cards $\to$ 5 cards; $|S| = \binom{52}{5}$ \begin{enumerate}
-    \item $\pr{3A, 2K} = \frac{\binom{4}{3}\binom{4}{2}}{\binom{52}{5}} \approx 0.000009\ldots$
-    \item $\pr{\text{full house}} = \frac{\binom{13}{1}\binom{4}{3}\binom{12}{1}\binom{4}{2}}{\binom{52}{5}} \approx 0.001\ldots$ 
+  
+  \item $52$ cards $\to$ 5 cards; $|S| = \binom{52}{5}$ which is how many ways to draw 5 cards from 52 cards.
+  \begin{enumerate}
+    \item The \#ways to pick 3 aces from 4 by how many ways to pick two kings from 4\\
+    $\pr{3A, 2K} = \frac{\binom{4}{3}\binom{4}{2}}{\binom{52}{5}} \approx 0.000009\ldots$
+    \item The amount of ways to pick 1 rank from a suite by the amount of ways to pick each rank from a suite.\\
+    $\pr{\text{full house}} = \frac{\binom{13}{1}\binom{4}{3}\binom{12}{1}\binom{4}{2}}{\binom{52}{5}} \approx 0.001\ldots$ 
   \end{enumerate}
+  
   \item $2w, 4h, 7a \to 1w, 2h, 3a$\\
   If every claim is different, and the process order doesn't matter, then $|S| = \binom{13}{6}$\\
   There is only one way to select $\set{w_1, h_1, h_2, a_1, a_2, a_3} \implies |A| = 1$\\
-  $\therefore \pr{A} = \frac{1}{\binom{13}{6}} \approx 0.0006\ldots$
+  $\therefore \pr{A} = \frac{1}{\binom{13}{6}} = \frac{1}{1716} \approx 0.0006\ldots$
+  
+  \newpage
   \item \begin{enumerate}
     \item Fluke $=\binom{5}{1}\binom{4}{1}\binom{3}{1}\binom{2}{1}\binom{1}{1} = 120$ arrangements
     \item Propose $= \binom{7}{2}\binom{5}{1}\binom{4}{2}\binom{2}{1}\binom{1}{1} = 1260$ arrangements
     \item Mississippi = $\binom{11}{1}\binom{10}{4}\binom{6}{4}\binom{2}{2} = 34650$ arrangements
   \end{enumerate}
-  \item $3u, 4r, 2z, 1c$; $|S| = \binom{10}{3,4,3} = 4200$ rankings\\
-  $P(\text{1 winner, 2 losers}) = \frac{\binom{7}{2,4,1}}{4200} = 0.025$
-  \item $9m = 2m_\alpha + 7m_x \to 3p_1, 3p_2, 3p_3$; $|S| = \binom{9}{3,3,3} = 1680$ outcomes\\
-  $P(2m_\alpha \to 3p_1) = \frac{\binom{7}{1,3,3}}{1680} = 0.08\overline{3}$
   
-  \newpage
+  \item $3u, 4r, 2z, 1c$; $|S| = \binom{10}{3,4,2,1} = 12600$ rankings\\
+  $P(\text{1 winner, 2 losers of US}) = \frac{\binom{7}{2,4,1}\binom{3}{1}\binom{3}{2}}{12600} = \frac{3}{40} = 0.075$
+  
+  \item $9m = 2m_\alpha + 7m_x \to 3p_1, 3p_2, 3p_3$; $|S| = \binom{9}{3,3,3} = 1680$ outcomes\\
+  $P(2m_\alpha \to 3p_1) = \frac{\binom{7}{1,3,3}}{1680} = \frac{1}{12} = 0.08\overline{3}$
+  
   \item \proof{}$\sum_{k=0}^{n}\binom{n}{k} = 2^n$\\
   The Binomial Theorem states that $(x+y)^n = \sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^k$.\\
   Then, let $x=y=1 \implies (1+1)^n = (2)^n = \sum_{k=0}^{n}\binom{n}{k}1^{n-k}1^k = \sum_{k=0}^{n}\binom{n}{k}1^n = \sum_{k=0}^{n}\binom{n}{k}$.\\
   $\therefore \sum_{k=0}^{n}\binom{n}{k} = 2^n$.
   
   \item \proof{} $\sum_{k=0}^{n>0}(-1)^k\binom{n}{k} = 0$\\
-  If $(x+y)^n = \sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^k \implies (1 - 1)^n = 0 = \sum_{k=0}^{n}\binom{n}{k}1^{n-k}(-1)^k = \sum_{k=0}^{n}\binom{n}{k}(-1)^k$\\
-  $\therefore \sum_{k=0}^{n>0}(-1)^k\binom{n}{k} = 0$.
+  If $(x+y)^n = \sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^k \implies (1 - 1)^n = 0^n = \sum_{k=0}^{n}\binom{n}{k}1^{n-k}(-1)^k = \sum_{k=0}^{n}\binom{n}{k}(-1)^k$\\
+  $\therefore \sum_{k=0}^{n>0}(-1)^k\binom{n}{k} = 0^n = 0$.
+  
   \item \proof{}$\sum_{k=0}^{n}k\binom{n}{k}=n2^{n-1}$\\
   Proven earlier, $2^n = \sum_{k=0}^{n}\binom{n}{k} \implies \frac{n}{2}\cdot2^{n} = n2^{n-1} = \frac{n}{2}\sum_{k=0}^{n}\binom{n}{k}$
 \end{enumerate}
