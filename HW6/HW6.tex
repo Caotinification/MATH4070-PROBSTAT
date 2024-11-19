@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+\usepackage{biblatex}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+\newcommand{\inte}[0]{\text{int}}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+  
+\newcommand{\pr}[1]{\operatorname{P}(#1)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[2]{\int #1 \diff #2}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\newtheorem*{theorem}{Theorem}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\footnotetext{All decimals are rounded to 4 places.}
+
+\begin{enumerate}
+  \item $\poisson{Y}{3.5} \implies \pr{Y=y} = \frac{3.5^y e^{-3.5}}{y!}$ \begin{enumerate}
+    \item $\pr{Y\geq 2} = 1 - \pr{Y=0} - \pr{Y=1} \approx 0.8641$
+    \item $\pr{Y \leq 1} = \pr{Y=0} + \pr{Y=1} \approx 0.1359$
+  \end{enumerate}
+  
+  \item $\poisson{Y}{3} \implies \pr{Y=y} = \frac{3^y e^{-3}}{y!}$ \begin{enumerate}
+    \item $\pr{Y \geq 3} = 1 - \sum_{y=0}^{2}\pr{Y=y} \approx 0.5768$
+    \item \[
+      \pr{Y \geq 3 \mid Y \geq 1} 
+      = \frac{\pr{Y\geq 3 \cap Y \geq 1}}{\pr{Y\geq 1}}
+      = \frac{\pr{Y\geq 3}}{\pr{Y\geq 1}} \approx 0.6070
+    \]
+  \end{enumerate}
+  
+  \item $\pr{Y=4} = 3\pr{Y=2}$\\
+  Let $\poisson{Y}{\lambda}$ be the number of claims filed $\implies \pr{Y=y} = \frac{\lambda^y e^{-\lambda}}{y!}$.\\
+  We solve for $\lambda$, the mean of the number of claims
+  \begin{align*}
+    \frac{\lambda^4 e^{-\lambda}}{4!} = 3\frac{\lambda^2 e^{-\lambda}}{2!} \implies \lambda = \sqrt{\frac{3\cdot 4!}{2!}} = 6
+  \end{align*}
+  Then, $\var{Y} = 6$.
+  
+  \item Let $\poisson{\text{I}}{3}$ and $\poisson{\text{II}}{4}$
+  represent the number of cars arriving at entrance \RN{1} and \RN{2} respectively.\\
+  The probability that a total of three cars will arrive at the parking lot in a given hour is
+  \[
+    \pr{\text{I} + \text{II} = 3}
+    = \sum_{y=0}^{3}\pr{\text{I} = y}\pr{\text{II} = 3-y} \approx 0.0521
+  \]
+  Note: $\poisson{Y}{7}$ with $\pr{Y=3}$ is equivalent.
+  
+  \item Let the number of customers who purchase the item during the day be
+  $\poisson{Y}{2} \implies \pr{Y=y} = \frac{2^y e^{-2}}{y!}$\\
+  The cost of the item is given by $C(Y) = 100(2^{-Y})$.\\
+  The expected cost of the item shall be
+  \begin{align*}
+    & \expt{C(Y)} = \sum_{y=0}^{\infty}C(y)\pr{Y=y} 
+    = \sum_{y=0}^{\infty}100\cdot 2^{-y}\frac{2^y e^{-2}}{y!}\\
+    & = 100e^{-2}\sum_{y=0}^{\infty}\frac{1}{y!}\\
+    & = 100e^{-2}e = 100e^{-1} \approx \$36.79
+  \end{align*}
+
+  \item
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    $y$ & $\binomdist{Y}{20}{0.05}$ & $\poisson{Y}{1}$ & Difference\\\hline
+    0 & 0.35848592 & 0.36787944 & 0.0093935188\\\hline
+    1 & 0.3773536 & 0.36787944 & 0.0094741614\\\hline
+    2 & 0.1886768 & 0.18393972 & 0.0047370807\\\hline
+  \end{tabular}\\
+  The binomial distribution approximates the Poisson distribution decently well in this case. The largest error being smaller than 0.01
+  
+  \newpage
+  \item Let $\poisson{Y}{800000 \cdot \binom{30}{6}^{-1}}$ represent the number of
+  winners with the approximation for $\lambda = n\cdot p$.\\
+  The probability that the state loses money is given by
+  \[
+    \pr{Y\geq 2} = 1 - \pr{Y=0} - \pr{Y=1} \approx 0.3898
+  \]
+  which only differs, before rounding, from the binomial distribution's value by $1.0244\times10^{-7}$.
+
+  \item $\pr{Y=y} = \binom{n}{y}p^{y}(1-p)^{n-y}$\\
+  Using the Binomial Theorem, it follows that
+  \begin{align*}
+    & M_Y(t) = \expt{e^{tY}} = \sum_{y=0}^{n}e^{ty}\binom{n}{y}p^{y}(1-p)^{n-y}\\
+    & = \sum_{y=0}^{n}\binom{n}{y}(pe^t)^{y}(1-p)^{n-y} = [pe^t + (1-p)]^n
+  \end{align*}
+  
+  \item $M_Y(t) = \frac{1}{6}e^t + \frac{2}{6}e^{2t} + \frac{3}{6}e^{3t}$
+  \begin{align*}
+    &\expt{Y} = \drv{}{t}{}M_Y(t)\bigg\rvert_{t=0} = 
+    \frac{1}{6}e^0 + \frac{4}{6}e^{0} + \frac{9}{6}e^{0} = \frac{14}{6}\\
+    &\expt{Y^2} = \drv{}{t}{2}M_Y(t)\bigg\rvert_{t=0} = \frac{1}{6}e^0 + \frac{8}{6}e^{0} + \frac{27}{6}e^{0} = 6\\
+    &\var{Y} = \expt{Y^2} - \expt{Y}^2 = 6 - \left( \frac{14}{6} \right)^2 = \frac{5}{9}
+  \end{align*}
+
+  \item \begin{enumerate}
+    \item \[
+      \expt{e^{tY}} = \left[\frac{1}{3}e^t +\frac{2}{3}\right]^5 \implies \binomdist{Y}{5}{1/3}
+    \]
+    \item \[
+      \expt{e^{tY}} = \frac{e^t}{2-e^t} = \frac{pe^t}{1-(1-p)e^t} \implies p = \frac{1}{2} \implies \geodist{Y}{1/2}
+    \]
+    \item \[
+      E[e^{tY}] = e^{2(e^t-1)} \implies \poisson{Y}{2}
+    \]
+  \end{enumerate}
+
+  \item \begin{enumerate}
+    \item $M_Y(0) = \expt{e^0} = \expt{1} = 1$
+    \item If $W = 3Y \implies M_W(t) = M_Y(3t)$
+    \begin{proof}
+      It immediately follows from the definitions
+      \[
+        M_W(t) = \expt{e^{t3Y}} = M_Y(3t) = \expt{e^{3tY}}
+      \]
+    \end{proof}
+    \item If $U = aY+b \implies M_U(t) = e^{bt}M_Y(at)$
+    \begin{proof}
+      \[
+        M_U(t) = \expt{e^{t(aY+b)}} = \expt{e^{aYt}e^{bt}} = e^{bt}\expt{e^{aYt}} = e^{bt}M_Y(3t)
+      \]
+    \end{proof}
+  \end{enumerate}
+
+  \item If $r(t) = \ln\left[M_Y(t)\right]\implies \drv{}{t}{1}r(t)\bigg\rvert_{t=0} = \expt{Y}$ and $\drv{}{t}{2}r(t)\bigg\rvert_{t=0} = \var{Y}$
+  \begin{proof}
+    First, we prove that $r^{(1)}(0) = \expt{Y}$
+    \begin{align*}
+      & M_Y(t) = \expt{e^{tY}} = \sum_{y}e^{ty}\pr{Y=y}\\
+      & r(t) = \ln(M_Y(t)) = \ln\left[
+        e^{0t}\pr{Y=0} + e^{t}\pr{Y=1} + e^{2t}\pr{Y=2} + \cdots
+      \right]\\
+      & \drv{}{t}{1}r(t) = 
+      \frac{0 \cdot \pr{Y=0} + e^t\pr{Y=1} + 2e^{2t}\pr{Y=2} + \cdots}
+      {\pr{Y=0} + e^{t}\pr{Y=1} + e^{2t}\pr{Y=2} + \cdots}\\
+      & \drv{}{t}{1}r(t)\bigg\rvert_{t=0} = 
+      \frac{0\cdot \pr{Y=0} + 1e^{0}\pr{Y=1} + 2e^{0}\pr{Y=2} + \cdots}
+      {\pr{Y=0} + e^{0}\pr{Y=1} + e^{0}\pr{Y=2} + \cdots} = \frac{\expt{Y}}{1} = \expt{Y}
+    \end{align*}
+    We see that the numerator expands to the definition of $\expt{Y}$,
+    and the denominator is the sum of the sample space.\\
+    Next, we show the latter, that $r^{(2)}(0) = \var{Y}$
+    \begin{align*}
+      & \Let f(t) = 0 \cdot \pr{Y=0} + e^t\pr{Y=1} + 2e^{2t}\pr{Y=2} + \cdots 
+      \implies \drv{}{t}{}f(t) = 0\cdot P(Y=0) + e^t\pr{Y=1} + 4e^{2t}\pr{Y=2} + \cdots\\
+      & \Let g(t) = \pr{Y=0} + e^{t}\pr{Y=1} + e^{2t}\pr{Y=2} + \cdots 
+      \implies \drv{}{t}{}g(t) = 0\cdot \pr{Y=0} + e^{t}\pr{Y=1} + 2e^{2t}\pr{Y=2} + \cdots\\
+      & \drv{}{t}{2}r(t)\bigg\rvert_{t=0} = 
+      \frac{\drv{}{t}{}f(0)g(0) - f(0)\drv{}{t}{}g(0)}{g(0)^2} = \frac{\expt{Y^2}\cdot 1 - \expt{Y}\cdot\expt{Y}}{1} = \expt{Y^2} - \expt{Y}^2 = \var{Y}
+    \end{align*}
+  \end{proof}
+\end{enumerate}
+
+\end{document}

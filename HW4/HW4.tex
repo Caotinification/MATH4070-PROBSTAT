@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[fleqn]{amsmath}
+\usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage[margin=0.5in]{geometry}
@@ -32,7 +32,10 @@
 \newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
   \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
   
-\newcommand{\pr}[1]{\operatorname{P} (#1)}
+\newcommand{\pr}[1]{\operatorname{P}(#1)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+
 
 \renewcommand{\thefootnote}{\Roman{footnote}}
 
@@ -44,6 +47,186 @@
 \maketitle
 
 \begin{enumerate}
-  \item 
+  \item Given that $y \in [0,3] \implies $
+  \begin{align*}
+    & \pr{Y = 0} = \pr{Y = 3} = \frac{1}{3!}\\
+    & \pr{Y = 1} = \pr{Y = 2} = \frac{1}{3}
+  \end{align*}
+  Which is valid, because
+  \[ \sum_{y=0}^{3}\pr{Y=y} = \frac{1}{6} + \frac{1}{3} + \frac{1}{3} + \frac{1}{6} =  1 \]
+  \item \begin{enumerate}
+    \item $y \in \set{2, 3, \ldots, 12}$
+    \item $y \in \set{-5, -4, \ldots, 0, \ldots 4, 5} = [-5,5]$
+    \item Note that $\sum_{y=-5}^{5}\pr{Y=y} = 1$
+    \begin{flushleft}
+      \begin{tabular}{|c|c|}
+        \hline 
+        $y$ & $\pr{Y = y}$\\
+        \hline 
+        $-5$ & $1/36$\\
+        \hline
+        $-4$ & $2/36$\\
+        \hline
+        $-3$ & $3/36$\\
+        \hline
+        $-2$ & $4/36$\\
+        \hline
+        $-1$ & $5/36$\\
+        \hline
+        $0$ & $6/36$\\
+        \hline
+        $1$ & $5/36$\\
+        \hline
+        $2$ & $4/36$\\
+        \hline
+        $3$ & $3/36$\\
+        \hline
+        $4$ & $2/36$\\
+        \hline
+        $5$ & $1/36$\\
+        \hline
+      \end{tabular}
+    \end{flushleft}
+  \end{enumerate}
+  \item $\pr{Y=y} = \frac{1}{(y+1)(y+2)}$ for $y \in \ns{N}$\\
+  \begin{align*}
+    & \pr{Y = 1} = \frac{1}{6}\\
+    & \pr{Y \leq 4} = \frac{5}{6}\\
+    & \pr{Y=1 \mid Y\leq 4} = \frac{\pr{Y = 1 \cap Y \leq 4}}{\pr{Y \leq 4}}\\
+    & \pr{Y \leq 4} = \sum_{y=0}^{4}\pr{Y=y} = \pr{\bigcup_{y=0}^{4}Y=y} \implies (Y=y_1) \cap (Y=y_2) = \emptyset: y_1,y_2 \in\ns{N}\\
+    & \therefore \pr{Y=1 \mid Y\leq 4} = \frac{\pr{Y = 1 \cap (Y = 1 \cup \ldots \cup Y = 4)}}{\pr{Y \leq 4}} = \frac{\pr{Y = 1}}{\pr{Y \leq 4}} = \frac{1}{5}
+    \\\blacksquare
+  \end{align*}
+  
+  \item Let $y\in m_y = \set{-4,5,15}$
+  \begin{math}
+    \pr{Y=\$15} = \pr{J} + \pr{Q} = \frac{8}{52}\\
+    \pr{Y=\$5} = \pr{K} + \pr{A} = \frac{8}{52}\\
+    \pr{Y=-\$4} = \frac{36}{52}\\
+    \therefore E(Y) = \sum_{y\in m_y}y\pr{Y=y} = \frac{4}{13} \approx \$0.31
+  \end{math}
+  
+  \item $S = \set{(R), (R^c, R), (R^c, R^c, R), (R^c, R^c, R^c)}$; $ \pr{R} = \frac{18}{38}, \pr{R^c} = \frac{20}{38}$
+  \begin{enumerate}
+    \item $y = \set{-3, -1, 0, 1}$
+    \item $\pr{Y > 0} = \pr{Y \geq 1} = \pr{Y = 1} = \pr{R}$
+    \item $E(Y) = \sum_{y}y\pr{Y=y} = -\frac{651}{6859} \approx -0.095$
+  \end{enumerate}
+
+  \item \begin{math}
+    \pr{Y = 1} = 0, \pr{Y = 2} = \frac{1}{6}, \pr{Y = 3} = \frac{2}{6}, \pr{Y = 4} = \frac{3}{6}\\
+    E(Y) = \sum_{y}y\pr{Y=y} = 0\cdot 1 + 2\cdot\frac{1}{6} + 3\cdot\frac{2}{6} + 4\cdot\frac{3}{6} = \frac{10}{3}
+  \end{math}
+  
+  \item Let $i \in \set{1,2,3,4}$, $|B_1| = 40, |B_2| = 33, |B_3| = 25, |B_4| = 50$ with drivers $D_1, D_2, D_3, D_4$
+  \begin{enumerate}
+    \item $\pr{X=B_i} = \frac{|B_i|}{148}$\\
+    $\pr{Y=B_i} = \frac{1}{4}$
+    \item \begin{enumerate}
+      \item $\mu_X = E(X) = \sum_{i}i\pr{X=i} = \frac{5914}{148} \approx 39.28\ldots$
+      \item $\mu_Y = E(Y) = \sum_{i}i\pr{Y=i} = 37$
+    \end{enumerate}
+    \item \begin{enumerate}
+      \item $\var{X} = E(X^2) - \mu_X^2 \approx 82.2032\ldots$
+      \item $\var{Y} = E(Y^2) - \mu_Y^2 = 84.5$
+    \end{enumerate}
+  \end{enumerate}
+  
+  \item Given $E(Y) = 1, \var{Y} = E(Y^2) - E(Y)^2 = 5 \implies E(Y^2) = 6$
+  \begin{enumerate}
+    \item $E((Y+2)^2) = E(Y^2+4Y+4) = E(Y^2) + 4E(Y) + E(4) = 14$
+    \item $\var{4+3Y} = E((3Y+4)^2) - E(3Y+4)^2 = 9E(Y^2) - 9E(Y)^2 = 9\cdot 6 - 9 = 45$
+  \end{enumerate}
+  
+  \item Let $Y$ be the random variable representing the number of recoveries, and given $\pr{R} = 0.7$\\
+  We can say that $\binomdist{Y}{10}{\pr{R}} \implies$Let $\pr{Y=y} = \binom{10}{y}\pr{R}^y\pr{R^c}^{10-y}$.
+  \begin{enumerate}
+    \item $\pr{Y=4} \approx 0.036756909$
+    \item $\pr{Y \geq 3} = \sum_{y=3}^{10}\pr{Y=y} \approx 0.9999940951$
+    \item $\pr{5\leq Y \leq 7} = \sum_{y=5}^{7}\pr{Y=y} \approx 0.5698682262$
+    \item $\pr{Y \leq 8} = \sum_{y=0}^{8}\pr{Y=y} \approx 0.8506916541$
+  \end{enumerate}
+  
+  \item Given $\pr{B_p} = 0.8$\\
+  Let $Y$ be the random variable representing the number of correct bits in the encoding message $M$ for a bit $b$.
+  Because a wrong bit is the opposite bit $\overline{b}$, and the machine transmits bits one at a time, 
+  which means the bits are independent of one another, therefore we can assume
+  \[\binomdist{Y}{5}{\pr{B_p}} \implies \pr{Y=y} = \binom{5}{y}\pr{B_p}^y\pr{B_p^C}^{5-y}\]
+  It is assumed that $b$ was sent correctly 
+  if $M$ contains more of $b$ than $\overline{b}$.\\
+  In the case of $5$ digits, at least $3$ or more $b$ bits means the message was properly sent$\implies$
+  \[ \pr{Y\geq 3} = \sum_{y=3}^{5}\pr{Y=y} = \frac{2944}{3125} = 0.94208\]
+  Then, the probability that $b$ was sent incorrectly is
+  \[ \pr{(Y \geq 3)^C} = 1-\pr{Y \geq 3} = 0.05792 = \pr{Y < 3}\]
+
+  \item Given $\pr{F} = 0.2 \implies \pr{F^c} = 0.8$,\\ 
+  Let $Y$ be the random variable of the number of
+  operating components that can operate past 1000 hours.\\
+  Then $\binomdist{Y}{4}{\pr{F^c}} 
+  \implies \pr{Y=y} = \binom{4}{y}\pr{F^c}^y\pr{F}^{4-y}$
+  \begin{enumerate}
+    \item $\pr{Y=2} = \frac{96}{625} = 0.1536$
+    \item If the system has operated for more than 1000 hours, this implies that $\pr{Y \geq 2}$ is given.
+    \[
+      \therefore \pr{Y = 2 \mid Y \geq 2} 
+      = \frac{\pr{Y = 2 \cap Y \geq 2}}{\pr{Y \geq 2}} 
+      = \frac{\pr{Y = 2}}{\pr{Y \geq 2}} 
+      = \frac{3}{19} \approx 0.157894736842
+    \]
+  \end{enumerate}
+  
+  \newpage
+
+  \item $\pr{-} = 2\pr{+} \implies \pr{-} = \frac{2}{3}, \pr{+} = \frac{1}{3}$\\
+  $\pr{p \mid +} = 0.8, \pr{p \mid -} = 0.4$\\
+  Let $Y$ be the random variable represent the number of passing examiners, 
+  $p$ the event of passing an examiner,\\  
+  and $\pr{P_{n\in \set{3,5}}}$ be the probabilities of passing the exam for $n$ examiners.\\
+  If it happens to be an on-day, then
+  \[
+    \binomdist{Y_n^+}{n}{\pr{p \mid +}} = 
+    \begin{cases}
+      n = 3 \implies \pr{Y_3^+=y} = \binom{3}{y}\pr{p \mid +}^y\pr{p^c \mid +}^{3-y}\\
+      n = 5 \implies \pr{Y_5^+=y} = \binom{5}{y}\pr{p \mid +}^y\pr{p^c \mid +}^{5-y}
+    \end{cases}
+  \]
+  Because passing the majority of the examinations means passing, then we should examine when $Y_n$ has a majority.
+  \begin{align*}
+    & \pr{Y_3^+ \geq 2} = \sum_{y=2}^{3}\pr{Y_3^+=y} = \frac{112}{125} = 0.896\\
+    & \pr{Y_5^+ \geq 3} = \sum_{y=3}^{5}\pr{Y_5^+=y} = \frac{2944}{3125} = 0.94208
+  \end{align*}
+  Then, in the case of an off-day,
+  \[
+    \binomdist{Y_n^-}{n}{\pr{p \mid -}}
+  \]
+  And, again, we examine when $Y_n$ is the majority,
+  \begin{align*}
+    & \pr{Y_3^- \geq 2} = \sum_{y=2}^{3}\pr{Y_3^-=y} = \frac{44}{125} = 0.352\\
+    & \pr{Y_5^- \geq 3} = \sum_{y=3}^{5}\pr{Y_5^-=y} = \frac{992}{3125} = 0.31744
+  \end{align*}
+  Thus, in general,
+  \begin{align*}
+    & \pr{P_3} = \pr{Y_3^+\geq 2}\pr{+} + \pr{Y_3^- \geq 2}\pr{-} = \frac{8}{15} = 0.5\overline{3}\\
+    & \pr{P_5} = \pr{Y_5^+\geq 3}\pr{+} + \pr{Y_5^- \geq 3}\pr{-} = \frac{4928}{9375} = 0.52565\overline{3}
+  \end{align*}
+  $\therefore$ The student should choose 3 tests.
+  
+  \item Let $\binomdist{Y}{100}{\pr{d}} \implies \pr{Y=y} = \binom{100}{y}\pr{d}^y\pr{d^c}^{100-y}$
+  \begin{align*}
+    & \pr{Y=3} = 2\pr{Y=2} \iff 
+    \binom{100}{3}\pr{d}^3(1 - \pr{d})^{97} 
+    = 2\binom{100}{2}\pr{d}^2(1 - \pr{d})^{98} \implies \pr{d} = \frac{3}{52}
+  \end{align*}
+
+  \item $\binomdist{Y}{4}{10\%} \implies E(Y) = \sum_{y=0}^{4}y\binom{4}{y}(10\%)^y(90\%)^{4-y} = \frac{2}{5}$\\
+  $E(Y^2) = \frac{13}{25} \implies E(C) = 3E(Y^2)+E(Y)+E(2) = \$3.96$
+
+  \item Let $Y$ represent the number of heads observed$\implies \binomdist{Y}{10}{p}$\\
+  $\pr{(HTT\ldots) \mid Y = 6} = 
+  \frac{\pr{(HTT\ldots) \cap Y=6}}{\pr{Y=6}} 
+  = \frac{p^6(1-p)^4\binom{7}{2}\binom{5}{5}}{\binom{10}{6}p^6(1-p)^4} 
+  = \frac{1}{10}$
+
+  \item \proof{}$\pr{Y>1 \mid Y\geq 1} = \frac{1-(1-p)^n-n(1-p)^{n-1}p}{1-(1-p)^n}$
 \end{enumerate}
 \end{document}

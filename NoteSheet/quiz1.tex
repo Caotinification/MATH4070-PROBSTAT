@@ -1,0 +1,215 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.2in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\proof}[1]{\textbf{Proof: #1}}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+\newcommand{\inte}[0]{\text{int}}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\defn}[1]{\textbf{#1}:}
+\newcommand{\mdef}[1]{$\mathbf{#1}$:}
+
+\newcommand{\pr}[1]{\operatorname{P}(#1)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}\newcommand{\setcompl}[1]{\overline{#1}}
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[4]{\int_{#3}^{#4} #1 \diff #2}
+
+\renewcommand{\and}{\text{ and }}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\begin{document}
+\section{Set Theory \& Probability}
+
+\defn{General}
+\begin{enumerate*}[label=(\roman*)]
+    \item $S = A\cup \setcompl{A}$
+    \item $A-B = A\cap \setcompl{B}$
+    \item $(A\cap B)\cup (A\cap\setcompl{B}) = A$
+\end{enumerate*}
+
+\noindent\defn{DeMorgan's Laws}
+\begin{enumerate*}[label=(\roman*)]
+    \item $\setcompl{A \cap B} = \setcompl{A} \cup \setcompl{B}$
+    \item $\setcompl{A \cup B} = \setcompl{A} \cap \setcompl{B}$
+\end{enumerate*}
+
+\noindent\defn{Semantic Meanings}
+\begin{enumerate}[label=(\roman*)]
+    \item Neither $\implies A^c \cap B^c = (A\cup B)^c$
+    \item Xor $\implies (A \cap B^c) \cup (A^c\cap B)$
+    \item At least one $\implies A\cup B$
+\end{enumerate}
+
+\section{Combinatorics}
+\defn{Counting Tools}
+\begin{enumerate}[label=(\alph*)]
+    \item \mdef{m\times n} Number of pairs between $m$ and $n$ items.
+    \item \mdef{m^n} Number of ways to fill $n$ slots with $m$ objects.
+    \item \mdef{P_r^n=\frac{n!}{(n-r)!}} Number of ways of ordering $n$ distinct objects taken $r$ at a time.
+    \item \mdef{\binom{n}{r}=\frac{n!}{r!(n-r)!}} Number of subsets, each of size $r$, that can be formed from $n$ objects.
+    \item \mdef{\binom{n}{n_1,n_2,\ldots,n_k} = \frac{n!}{n_1!n_2!\ldots n_k!}}
+    Number of ways of partitioning $n$ distinct objects into $k$ distinct groups
+    containing $n_1, n_2,\ldots n_k$ objects. This has restriction: $\sum_{i=1}^{k}n_i = n$
+\end{enumerate}
+\noindent\defn{Binomial Expansion} $(x+y)^n = \sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^k$
+
+\section{Conditional Probability}
+\defn{A given B occurred} $\pr{A \mid B} = \frac{\pr{A \cap B}}{\pr{B}}$\\
+\defn{Independence} Two events $A,B$ are independent $\iff$
+\begin{enumerate}[label=(\roman*)]
+    \item $\pr{A\mid B} = \pr{A} \iff \pr{B\mid A} = \pr{B}$
+    \item $\pr{A\cap B} = \pr{A}\pr{B}$
+\end{enumerate}
+\defn{Properties}
+\begin{enumerate}[label=(\roman*)]
+    \item $\pr{A \mid A\cup B} = \frac{\pr{A}}{\pr{A \cup B}}$
+    \item $\pr{A\cap B \mid A\cup B} = \frac{\pr{A \cap B}}{\pr{A \cup B}}$
+    \item $\pr{A^c \mid B} = 1 - \pr{A \mid B}$
+    \item $\pr{A} = \pr{A \cap B} + \pr{A \cap B^c} \equiv \pr{A\mid B}\pr{B} + \pr{A\mid B^c}\pr{B^c}$
+    \item If $A,B$ are independent then $\implies (A^c, B), (A, B^c)$ and $(A^c, B^c)$ are all independent.
+\end{enumerate}
+\defn{Multiplicative Law} \begin{enumerate}[label=(\roman*)]
+    \item $\pr{A\cap B} = \pr{A}\pr{B \mid A} = \pr{B}\pr{A \mid B}$
+    \item $\pr{A \cap B \cap C} = \pr{A}\pr{B\mid A}\pr{C \mid B\cap A}$
+\end{enumerate}
+
+\subsection{Bayes}
+\defn{Total Law of Probability}\\
+If $\set{B_1, B_2, \ldots, B_n}$ is a partition of 
+$S \implies \pr{A} = \sum_{k=1}^{n}\pr{A \mid B_k}\pr{B_k} = \sum_{k=1}^{n}\pr{A \cap B_k}$\\
+\defn{Bayes' Theorem}
+\[
+    \pr{B_j \mid A} = 
+    \frac{\pr{A \mid B_j}\pr{B_j}}{\sum\limits_{k}\pr{A \mid B_k}\pr{B_k}};
+    \pr{A\mid B} = \frac{\pr{B \mid A}\pr{A}}{\pr{B}}
+\]
+
+
+\section{Discrete Random Variables}
+\defn{$\pr{Y=y}$} Probability that $Y$ takes on $y$ is the sum of the probabilities of all
+the sample points in $S$ that are assigned the value $y$.
+
+\noindent\defn{$\expt{Y} = \mu = \sum_{y}y\pr{Y=y}$}
+The expected value of $Y$. Alternatively, the mean.\\
+\defn{$\var{Y} = \sigma^2 = \expt{Y^2}-\expt{Y}^2$}
+The spread of $Y$ from its expected value.\\
+
+\defn{Properties}
+\begin{enumerate}[label=(\roman*)]
+    \item $\expt{c} = c$ where $c$ is a constant
+    \item $\expt{g(Y)} = \sum_{y}g(y)\pr{Y=y}$
+    \item Given $g_1(Y), g_2(Y), \ldots, g_k(Y) 
+    \implies \expt{g_1(Y) + g_2(Y) + \cdots + g_k(Y)} = \expt{g_1(Y)} + \expt{g_2(Y)} + \cdots + \expt{g_k(Y)}$
+        \begin{enumerate}
+            \item $\var{g_1(Y) + g_2(Y) + \cdots + g_k(Y)} = \var{g_1(Y)} + \var{g_2(Y)} + \cdots + \var{g_k(Y)}$
+        \end{enumerate}
+    \item $\var{aY+b} = \var{aY} = a^2\var{Y}$
+\end{enumerate}
+
+\subsection{Moment Generating Functions}
+\defn{MGF of $Y$} \[
+    M_Y(t) = \expt{e^{tY}} = \sum_{y}e^{ty}\pr{Y=y}
+\]\\
+\defn{$k^{\text{th}}$ Moment of $Y$} $\expt{Y^k}$\\
+\[
+    \drv{}{t}{k}M_Y(t)\bigg\rvert_{t=0} = \begin{cases}
+        k = 1 & \implies \expt{Y}\\
+        k = 2 & \implies  \expt{Y^2}\\
+        \vdots\\
+        k = n & \implies \expt{Y^n}
+    \end{cases}
+\]
+\subsubsection{Calculus}
+\defn{Chain Rule} $(f\circ g)' = (f\circ g)'g'$\\
+\defn{Product Rule} $(f\cdot g)' = f'g + fg'$\\
+\defn{Quotient Rule} $(\frac{f}{g})' = \frac{f'g-fg'}{g^2}$\\
+\defn{Integration by parts} \[
+    \intv{u}{v}{}{} = uv - \intv{v}{u}{}{}
+\]
+\defn{Power Rule} \[
+    \intv{x^n}{x}{}{} = \frac{1}{n+1}x^{n+1}
+\]
+\newpage
+\section{Discrete Distribution Dictionary}
+\begin{itemize}
+    \item \defn{$\binomdist{Y}{n}{p}$}
+    Observing $y \in [0,n]$ successes in fixed $n$ trials.
+    \[
+        \pr{Y=y} = \binom{n}{y}p^y(1-p)^{n-y} \implies \mu = n\cdot p \and \sigma^2 = np(1-p)
+    \]
+    \[
+        M_Y(t) = \left[pe^t+(1-p)\right]^n
+    \]
+    \item \defn{$\nbinomdist{Y}{r}{p}$}
+    Observing the fixed $r^{th}$ success in $y \in [r, \infty)$ trials.
+    \[
+        \pr{Y=y} = \binom{y-1}{r-1}p^{r}(1-p)^{y-r} \implies \mu = \frac{r}{p} \and \sigma^2 = \frac{r(1-p)}{p^2}
+    \]
+    \[
+        M_Y(t) = {\left[\frac{pe^t}{1-(1-p)e^t}\right]}^r
+    \]
+    \item \defn{$\geodist{Y}{p} = \operatorname{NB}(1,p)$}
+    Observing 1 success in $y \in [1, \infty)$ trials.
+    \[
+        \pr{Y=y} = (1-p)^{y-1}p \implies \mu = \frac{1}{p} \and \sigma^2 = \frac{1-p}{p^2}
+    \]
+    \[
+        M_Y(t) = \frac{pe^t}{1-(1-p)e^t}
+    \]
+    \item \defn{$\hypegeodist{Y}{N}{r}{n}$}
+    Observing $y \in \begin{cases}
+        [0, n] \If{} n \leq r,\\
+        [0, r] \If{} n > r
+    \end{cases}$ successes in $n$ draws, without replacement,
+    from a population of $N$ that contains $r$ success states.
+    \[
+        \pr{Y=y} = \frac{\binom{r}{y}\binom{N-r}{n-y}}{\binom{N}{n}}
+        \implies \mu = \frac{r\cdot n}{N} \and \sigma^2 = 
+        n\left(\frac{r}{N}\right)\left(\frac{N-r}{N}\right)\left(\frac{N-n}{N-1}\right)
+    \]
+
+    \item \defn{$\poisson{Y}{\lambda}$}
+    Observing $y\in [0,\infty)$ indepedent events that occur with a
+    constant mean rate of $\lambda$ in a fixed interval of time or area.
+    Note: $\poisson{Y}{n\cdot p} = \binomdist{Y}{n}{p}$ if $n$ is very large, or $p$ is small.
+    That is to say, it may be used to approximate the binomial distribution.
+    \[
+        \pr{Y=y} = \frac{\lambda^{y}e^{-\lambda}}{y!} \implies \mu = \lambda \and \sigma^2 = \lambda
+    \]
+    \[
+        M_Y(t) = e^{\lambda(e^t-1)}
+    \]
+\end{itemize}
+
+\end{document}

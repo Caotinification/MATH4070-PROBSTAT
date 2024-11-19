@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+\usepackage[normalem]{ulem}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+  
+\newcommand{\pr}[1]{\operatorname{P}\left(#1\right)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+\newcommand{\cov}[1]{\operatorname{Cov}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+\newcommand{\unidist}[3]{#1 \sim \operatorname{Uniform}(#2, #3)}
+\newcommand{\normdist}[3]{#1 \sim \operatorname{Normal}(#2, #3)}
+\newcommand{\expdist}[2]{#1 \sim \operatorname{Exponential}(#2)}
+\newcommand{\gamdist}[3]{#1 \sim \operatorname{Gamma}(#2, #3)}
+\newcommand{\chidist}[2]{#1 \sim \operatorname{\chi^2}(#2)}
+\newcommand{\betdist}[3]{#1 \sim \operatorname{Beta}(#2, #3)}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[4]{\int_{#3}^{#4} #1 \diff #2}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\newtheorem*{theorem}{Theorem}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\footnotetext{All decimals are rounded to 4 places.}
+
+\begin{enumerate}
+  \item $f(y_1, y_2) = y_1 + y_2$, $0 < y_1, y_2 < 1$
+  \begin{enumerate}
+    \item $\expt{Y_1} = \intv{ y_1(y_1+y_2) }{y_1}{0}{1} = \frac{1}{3} + \frac{y^2}{2}$
+    \item $\expt{Y_2} = \intv{ y_2(y_1+y_2) }{y_2}{0}{1} = \frac{y_1}{2} + \frac{1}{3}$
+  \end{enumerate}
+
+  \item $f(y_1, y_2) = 4y_1y_2, 0 < y_1, y_2 < 1 \implies y_1, y_2$ independent.
+  \begin{enumerate}
+    \item $\expt{Y_1} = 4y_2\intv{y_1^2}{y_1}{0}{1} = \frac{4y_2}{3}$
+    \item $\var{Y_1} = \expt{Y_1^2} - {\expt{Y_1}}^2 = y_2 - \left(\frac{4y_2}{3}\right)^2$
+    \item $\expt{Y_1 - Y_2} = \expt{Y_1} - \expt{Y_2} = 
+    \frac{4}{3}y_2 - 4y_1\intv{y_2^2}{y_2}{0}{1} = \frac{4}{3}(y_2-y_1)$
+  \end{enumerate}
+
+  \item $f(y_1, y_2) = 1/y_2, 0 < y_1 < y_2 < 1$ \begin{enumerate}
+    \item $\expt{Y_1Y_2} = $ \[
+      \intv{ \intv{ y_1 }{y_1}{0}{y_2} }{y_2}{0}{1}
+      = \frac{1}{2}\intv{ y_2^2 }{y_2}{0}{1}
+      = \left[\frac{1}{2\cdot 3}y_2^3\right]_{0}^{1}
+      = \frac{1}{6}
+    \]
+    \item $\expt{Y_1} = $ \[
+      \intv{ \intv{ \frac{y_1}{y_2} }{y_1}{0}{y_2} }{y_2}{0}{1}
+      = \intv{ \left[\frac{y_1^2}{2y_2}\right]_{0}^{y_2} }{y_2}{0}{1}
+      = \intv{ \frac{y_2}{2} }{y_2}{0}{1}
+      = \left[ y_2^2/4 \right]_{0}^{1} = \frac{1}{4}
+    \]
+    \item $\expt{Y_2} = $ \[
+      \intv{ \intv{ 1 }{y_1}{0}{y_2} }{y_2}{0}{1}
+      = \frac{1}{2}
+    \]
+    \item $\cov{Y_1, Y_2} = \expt{Y_1Y_2} - \expt{Y_1}\expt{Y_2} 
+    = \frac{1}{6} - \frac{1}{2\cdot 4} = \frac{1}{6} - \frac{1}{8} = \frac{1}{24}$
+  \end{enumerate}
+
+  \item $f(y_1, y_2) = 1$, $0 < y_1 < 2$, $0 < y_2 < 1$, $2y_2 < y_1$\\
+  $\expt{Y_1 - Y_2} = $ \[
+    \intv{ \intv{y_1 - y_2}{y_2}{0}{y_1/2} }{y_1}{0}{2}
+    = \intv{ \left[ y_1y_2 - \frac{1}{2}y_2^2 \right]_{0}^{y_1/2} }{y_1}{0}{2}
+    = \frac{3}{8}\intv{ y_1^2 }{y_1}{0}{2}
+    = 1
+  \]
+
+  \item $f(y_1, y_2) = 6(1-y_2), 0 \leq y_1 \leq y_2 \leq 1$
+  \begin{enumerate}
+    \item $\cov{Y_1, Y_2} = \expt{Y_1Y_2} - \expt{Y_1}\expt{Y_2} = \frac{3}{20} - \frac{1}{8} = \frac{1}{40}$
+    \begin{enumerate}
+      \item $\expt{Y_1Y_2} = $ \[
+        6\intv{ (1-y_2)y_2\intv{ y_1 }{y_1}{0}{y_2} }{y_2}{0}{1}
+        = 3\intv{ y_2^3-y_2^4 }{y_2}{0}{1}
+        = 3\left[\frac{1}{4}y_2^4 - \frac{1}{5}y_2^5 \right]_{0}^{1}
+        = \frac{3}{20}
+      \]
+      \item $\expt{Y_1} = $ \[
+        6\intv{ (1-y_2)\intv{ y_1 }{y_1}{0}{y_2} }{y_2}{0}{1}
+        = 3\intv{ y_2^2-y_2^3 }{y_2}{0}{1}
+        = \left[ y_2^3-\frac{3}{4}y_2^4 \right]_{0}^{1}
+        = \frac{1}{4}
+      \]
+      \item $\expt{Y_2} = $ \[
+        6\intv{ (1-y_2)y_2\intv{ }{y_1}{0}{y_2} }{y_2}{0}{1}
+        = 6\intv{ y_2^2-y_2^3 }{y_2}{0}{1}
+        = \left[ 2y_2^3 - \frac{3}{2}y_2^4 \right]_{0}^{1}
+        = \frac{1}{2}
+      \]
+    \end{enumerate}
+
+    \item $\var{Y_1 - 3Y_2} = \var{Y_1} + 3^2\var{Y_2} - 2(3)\cov{Y_1, Y_2} = \frac{27}{80}$
+    \begin{enumerate}
+      \item $\var{Y_1} = \expt{Y_1^2} - \expt{Y_1}^2 = \frac{1}{10} - \frac{1}{16} = \frac{3}{80}$
+      \item $\var{Y_2} = \expt{Y_2^2} - \expt{Y_2}^2 = \frac{3}{10} - \frac{1}{4} = \frac{1}{20}$
+    \end{enumerate}
+  \end{enumerate}
+  \newpage
+
+  \item $X$ is the benefit to the surgeon, and $Y$ to the hospital.
+  $\var{X} = 5000, \var{Y} = 10000, \var{X+Y} = 17000$.\\
+  From the given information, \[
+    \var{X+Y} = \var{X} + \var{Y} + 2\cov{X, Y} = 17000
+    \iff \cov{X, Y} = \expt{XY} - \expt{X}\expt{Y} = 1000
+  \]
+  So we can interpret the question as asking
+  \[
+    \var{X + 100 + 1.1Y} = \var{X} + 1.1^2\var{Y} + 2(1.1)\cov{Y_1, Y_2} = 19300
+  \]
+
+  \item $f(y_1, y_2) = y_2^{-1}, 0 < y_1 < y_2 < 1$\\
+  $\expt{Y_1 \mid Y_2 = y_2} = $\[
+    \intv{ y_1\frac{y_2^{-1}}{\intv{ y_2^{-1} }{y_2}{y_1}{1}} }{y_1}{0}{y_2}
+    = \intv{ y_1\frac{y_2^{-1}}{\ln (y_2^{-1})} }{y_1}{0}{y_2}
+    = \frac{y_2}{\ln(y_2^{-1})}
+  \]
+  \item $f(y_1, y_2) = 6(1-y_2), 0 \leq y_1 \leq y_2 \leq 1$\\
+  $\expt{Y_2 \mid Y_1 = y_1} = $\[
+    \intv{y_2 f(y_2 \mid y_1) }{y_2}{y_1}{1}
+    = \intv{y_1 \frac{6(1-y_2)}{ \intv{6(1-y_2)}{y_1}{0}{y_2} } }{y_2}{y_1}{1}
+    = \intv{y_1 \frac{1}{y_2 } }{y_2}{y_1}{1}
+    = \frac{y_1}{\ln(y_1^{-1})}
+  \]
+
+  \item $f(y_1, y_2) = \frac{e^{-y_2}}{y_2}, 0 < y_1 < y_2 < \infty$\\
+  $\expt{Y_1^3 \mid Y_2 = y_2} = $ \[
+    \intv{ y_1^3 \frac{e^{-y_2}/y_2}{} }{y_1}{0}{y_2}
+  \]
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,246 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+\usepackage[normalem]{ulem}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+  
+\newcommand{\pr}[1]{\operatorname{P}\left(#1\right)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+\newcommand{\unidist}[3]{#1 \sim \operatorname{Uniform}(#2, #3)}
+\newcommand{\normdist}[3]{#1 \sim \operatorname{Normal}(#2, #3)}
+\newcommand{\expdist}[2]{#1 \sim \operatorname{Exponential}(#2)}
+\newcommand{\gamdist}[3]{#1 \sim \operatorname{Gamma}(#2, #3)}
+\newcommand{\chidist}[2]{#1 \sim \operatorname{\chi^2}(#2)}
+\newcommand{\betdist}[3]{#1 \sim \operatorname{Beta}(#2, #3)}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[4]{\int_{#3}^{#4} #1 \diff #2}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\newtheorem*{theorem}{Theorem}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\footnotetext{All decimals are rounded to 4 places.}
+
+\begin{enumerate}
+  \item $\normdist{Y}{10}{36} \equiv \normdist{Z}{0}{1} = \frac{Y - 10}{6}$
+  \begin{enumerate}
+    \item $\pr{Y > 5} 
+    = \pr{Z > \frac{-5}{6}} = \pr{Z < \frac{5}{6}} = 1 - \pr{Z > \frac{5}{6}} = 0.7967$
+    \item $\pr{4 < Y < 16} = \pr{-1 < Z < 1} = 1 - 2\pr{Z > 1} = 0.6826$
+  \end{enumerate}
+  
+  \item Let $\normdist{R}{40}{4^2}$ represent the annual rainfall.\\
+  The probability of at most 50 inches of rainfall is \[
+    \pr{R \leq 50} = \pr{Z \leq \frac{50 - 40}{4}} = 1 - \pr{Z > 2.5} = 1 - 0.0062 = 0.9938
+  \]
+  Because years are discrete, and we want 10 years
+  in a row with a rainfall of at most 50 inches, the most fitting discrete distribution
+  would be $\binomdist{Y}{10}{\pr{Z \leq 2.5}}$. It must be that the probability of
+  10 years in a row of at most 50 inches of rainfall is \[
+    \pr{Y = 10} = \binom{10}{10}\pr{Z \leq 2.5}^{10} \approx 0.9397
+  \]
+  \item \begin{enumerate}
+    \item $\pr{Z > z_0} = 0.5 \implies z_0 = 0$
+    \item \[
+      \pr{-z_0 < Z < z_0} = \intv{Z}{z}{-z_0}{z_0} = 0.9
+    \]
+    Because the normal distribution is symmetric, this integral is equivalent to \[
+      2\intv{Z}{z}{0}{z_0} = 0.9 \implies \intv{Z}{z}{0}{z_0} = 0.45 \equiv \pr{0 < Z < z_0}
+    \]
+    Then we convert \[
+      \pr{0 < Z < z_0} = \pr{Z > 0 \cap Z < z_0} = 1 - \pr{Z < 0} - \pr{Z > z_0} = 0.45
+      \implies \pr{Z > z_0} = 0.05
+    \]
+    $\therefore z_0 = 1.65$.
+  \end{enumerate}
+
+  \item Let $\normdist{Y}{10}{4}$ represent the working lifetime in years of a client.
+  The \nth{14} percentile is a value such that $\pr{Y \leq \phi_{0.14}} = 0.14$.
+  Equivalently, \[
+    \pr{Z \leq \frac{\phi_{0.14} - 10}{2}} = 0.14
+  \]
+  We can invert the inside and get \[
+    \pr{Z \geq \frac{10 - \phi_{0.14}}{2}} = 0.14 \implies
+    \frac{10 - \phi_{0.14}}{2} = 1.08 \implies \phi_{0.14} = 10-2(1.08) = 7.84
+  \]
+  So, $\phi_{0.14} = 7.84$ years.
+
+  \item Let $\expdist{Y}{2}$ represent the repair time.
+  \begin{enumerate}
+    \item $\pr{Y \geq 2} = \frac{1}{2}\intv{e^{-y/2}}{y}{2}{\infty} = \frac{1}{e}$
+    \item By the memoryless property,
+    $\pr{Y \geq 9 + 1 \mid Y \geq 9} = \pr{Y \geq 1} = e^{-1/2} \approx 0.6065$
+  \end{enumerate}
+
+  \item \begin{enumerate}
+    \item Let $\expdist{Y}{20}$ represent the thousands of miles before a car is junked.\\
+    By the memoryless property, 
+    $\pr{Y \geq 10 + 20 \mid Y \geq 10} = \pr{Y \geq 20} = e^{-1} \approx 0.3679$
+    \item $\unidist{Y}{0}{40}$, so now we want
+    $\pr{Y \geq 30 \mid Y \geq 10} = \frac{\pr{Y \geq 30}}{\pr{Y \geq 10}} = 1/3$
+  \end{enumerate}
+
+  \item $\expdist{Y}{\beta} \implies f_Y(y) = \frac{e^{-y/\beta}}{\beta}$\\
+  Median of $Y = \pr{Y \leq \phi_{0.5}} = 0.5$, thus \[
+    \intv{\frac{e^{-y/\beta}}{\beta}}{y}{0}{\phi_{0.5}} 
+    = -e^{-\phi_{0.5}/\beta} - (-e^{0}) \implies e^{-\phi_{0.5}/\beta} = 0.5
+  \]
+  Solving for $\phi_{0.5}$, we get \[
+    \phi_{0.5} = \ln0.5^{-\beta} = \ln2^{\beta}
+  \]
+
+  \item Let $\expdist{Y}{\beta}$ represent the number of days that elapse between the
+  beginning of the calendar year before an an accident occurs.\\
+  First, we solve for $\beta$, \[
+    \pr{Y\leq 50} = \intv{\frac{e^{-y/\beta}}{\beta}}{y}{0}{50} 
+    = -e^{-50/\beta} + e^{0} = 0.3 \implies \beta = \frac{50}{\ln(10/7)}
+  \]
+  Then, \[
+    \pr{Y \leq 80} = F_Y(80) - F_Y(0) = 1 - e^{-80/\beta} \approx 0.4349
+  \]
+
+  \item Let $\expdist{Y}{1/20}$ represent the monthly commission for an agent.
+  Our STD is $20$, and our mean is $20$.\\
+  The CDF of Y is $F_Y(y) = 1-e^{-0.05y}$.
+  We want \[
+    \pr{10 < Y < 30} = F_Y(30) - F_Y(10) \approx 0.3834
+  \]
+
+  \item If $\gamdist{Y}{\alpha}{\beta} 
+  \implies \expt{Y^k} = \frac{\Gamma(\alpha + k)}{\Gamma(\alpha)}\beta^k$
+  where $\Gamma(\alpha) = \intv{y^{\alpha - 1}e^{-y}}{y}{0}{\infty}$
+  \begin{proof}
+    The MGF of Y is $M_Y(t) = (1-\beta t)^{-\alpha}$,
+    and $\drv{}{t}{k}M_Y(t)\rvert_{t=0} = \expt{Y^k}$
+    \[
+      \drv{}{t}{k}M_Y(t)\bigg\rvert_{t=0} 
+      = \drv{}{t}{k}(1-\beta t)^{-a}\bigg\rvert_{t=0} 
+      = (-1)^{k}(-(\alpha + k - 1))(-(\alpha + k - 2))
+      \ldots\alpha\beta^{k}(1-\beta t)^{-(a+k)}\bigg\rvert_{t=0} 
+    \]
+    If $k$ is odd, then we get $(-1)^k$ times odd negative terms which is positive.\\
+    If $k$ is even, we get $(-1)^n$ times even negative terms which is positive.\\
+    Then, evaluated at $t=0$ \[
+      \expt{Y^k} 
+      = (\alpha + k - 1)(\alpha + k - 2)\ldots\alpha\beta^{k}
+      = \frac{\Gamma(a+k)}{\Gamma(a)}\beta^{k}
+    \]
+  \end{proof}
+
+  \item $f_Y(y) = k\left( y^3e^{-y/2} \right), y > 0 \implies \gamdist{Y}{4}{2}$
+  \[
+    k\intv{y^{4-1}e^{-y/2}}{y}{0}{\infty} = 1 \implies k = \frac{1}{2^4\Gamma(4)}
+  \]
+  $\chidist{Y}{8} = \gamdist{Y}{8/2}{2}$
+  
+  \item If $\betdist{Y}{4}{3} \implies k = \frac{\Gamma(4 + 3)}{\Gamma(4)\Gamma(3)} = 60$
+
+  \item $\betdist{Y}{3}{2}$
+  \begin{enumerate}
+    \item The probability that a batch can't be sold is \[
+      \pr{Y > 0.4} = 1 - \intv{12y^2(1-y)}{y}{0}{0.4} 
+      = 1 - \intv{12y^2 - 12y^3}{y}{0}{0.4}
+      = 1 - \left[ 4y^3 - 3y^4 \right]_{0}^{0.4}
+      = 1 - \frac{112}{625} = 0.8208
+    \]
+
+    \item \[
+      \expt{Y} = \intv{12y^3 - 12y^4}{y}{0}{1} = 60\%
+    \]
+  \end{enumerate}
+
+  \item 
+  Integrate by parts
+  \[
+    \intv{e^{ty}\left(ye^{-y}\right)}{y}{0}{\infty}
+    = \intv{ye^{(t-1)y}}{y}{0}{\infty} 
+    = \left[\frac{ye^{(t-1)y}}{t-1} - \frac{e^{(t-1)y}}{(t-1)^2} \right]_{0}^{\infty}
+  \]
+  Assume $|t| < 1$ so \[
+    M_Y(t) = \lim_{y\to\infty}
+    \left[\frac{y}{e^{(t-1)y}(t-1)} - \frac{1}{e^{(t-1)y}(t-1)^2} \right] 
+    - \left(-\frac{1}{(t-1)^2}\right) = 0 + \frac{1}{(t-1)^2}
+  \]
+  \item \[
+    M_Y(t) = \expt{e^{tY}} = \intv{e^{ty}(1+y)}{y}{-1}{0} + \intv{e^{ty}(1-y)}{y}{0}{1}
+  \]
+  % u = 1+y, du = 1; v = t^{-1}e^{ty}, dv = e^{ty}
+  After integrating by parts,\[
+    = \left[(1+y)t^{-1}e^{ty} - t^{-2}e^{ty}\right]_{-1}^{0} 
+    + \left[(1-y)t^{-1}e^{ty} + t^{-2}e^{ty}\right]_{0}^{1}
+  \]
+  Evaluating gives us \[
+    \left[ (t^{-1} - t^{-2}) + (t^{-2}e^{-t}) \right] + 
+    \left[ (t^{-2}e^{t} )- (t^{-1} + t^{-2}) \right]
+    = -2t^{-2} + t^{-2}e^{-t} + t^{-2}e^{t}
+  \]
+  So, \[
+    M_Y(t) = t^{-2}\left( e^t + e^{-t} - 2 \right)
+  \]
+  \item \[
+    \drv{}{t}{3}e^{t^2/2}\bigg\rvert_{t=0}
+    = \drv{}{t}{2}te^{t^2/2}\bigg\rvert_{t=0} 
+    = \drv{}{t}{1}(e^{t^2/2}+t^2e^{t^2/2})\bigg\rvert_{t=0}
+    = te^{t^2/2} + 2te^{t^2/2} + t^3e^{t^2/2}\bigg\rvert_{t=0} = 0
+  \]
+
+  \item $\sigma = \sqrt{\expt{Y^2} - \expt{Y}^2}$\\ 
+  We calculate the first and second MGF
+  \[
+    \drv{}{t}{2}(1 - 500t)^{-4}
+    = \drv{}{t}{1}(-4)(-500)(1 - 500t)^{-5}
+    = (-5)(-4)(-500)^2(1 - 500t)^{-6}
+  \]
+  thus \[
+    \expt{Y^2} = 20\cdot 500^2\text{ and }\expt{Y} = 4\cdot 500 
+    \implies \sigma = \sqrt{20\cdot 500^2 - 2000^2} = 1000
+  \]
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+\usepackage[normalem]{ulem}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+  
+\newcommand{\pr}[1]{\operatorname{P}\left(#1\right)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+\newcommand{\unidist}[3]{#1 \sim \operatorname{Uniform}(#2, #3)}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[4]{\int_{#3}^{#4} #1 \diff #2}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\newtheorem*{theorem}{Theorem}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\footnotetext{All decimals are rounded to 4 places.}
+
+\begin{enumerate}
+  \item $F_Y(y) = \frac{1}{2} - \frac{y}{10}, 1 \leq y \leq 4$
+  \begin{center}
+    \includegraphics*[height=1.5in]{fYgraph.png}
+  \end{center}
+  
+  \item \begin{enumerate}
+    \item $\pr{Y=1} = \pr{Y = 2} = \ldots = \pr{Y = 5} = \frac{1}{5}$
+    \item $F_Y(y) = \begin{cases}
+      y = 0 & \implies 0\\
+      1 \leq y \leq 5 & \implies \frac{y}{5}
+    \end{cases}$
+    \item \begin{enumerate}
+      \item $\pr{Y < 3} = 1 - \pr{2} - \pr{1} - \pr{0} = \frac{2}{5}$
+      \item $\pr{Y \leq 3} = F(3) = \frac{3}{5}$
+      \item $\pr{Y = 3} = \frac{1}{5}$
+    \end{enumerate}
+  \end{enumerate}
+
+  \item $f_Y(y) = c(1-y^2)$ for $y\in(-1,1)$
+  \begin{enumerate}
+    \item \[
+      1 = \intv{f_Y(y)}{y}{-1}{1} = 
+      c\intv{1-y^2}{y}{-1}{1} = 
+      c\left[ y-\frac{y^3}{3} \right]_{y=-1}^{y=1} = c\cdot \frac{4}{3} \implies c = \frac{3}{4}
+    \]
+    \item $F_Y(y) = \frac{3}{4}(y-\frac{y^3}{3})$
+  \end{enumerate}
+
+  \item $F_Y(y) = 1-e^{-y^2}, y\geq 0$ 
+  \begin{enumerate}
+    \item $F_Y(y) = 1-e^{-y^2} = 0.3 \implies y = \sqrt{\ln\left(\frac{10}{7}\right)}$\\ 
+    $\phi_{0.3} = F_Y^{-1}(0.3) = \sqrt{\ln\left(\frac{10}{7}\right)} \approx 0.5972$
+
+    \item $\drv{}{y}{}F_y(y) = f_y(y) = 2ye^{-y^2}, y\geq 0$
+    \item $\pr{Y\geq 2} = 1 - F_y(2) \approx 0.0183$
+    \item $\pr{Y > 1 \mid Y > 2} = \frac{\pr{Y > 1 \mid Y > 2}}{\pr{Y > 2}} = 1$
+  \end{enumerate}
+
+  \item \begin{align*}
+    & \intv{a+by^2}{y}{0}{1} = ay + \frac{b}{3}y^3\bigg\rvert_0^1 = 1 \implies a+\frac{b}{3} = 1\\
+    & \expt{Y} = \frac{3}{5} = \intv{y(a+by^2)}{y}{0}{1}\\
+    & =\intv{ay+by^3}{y}{0}{1} 
+    = \frac{a}{2}y^2 + \frac{b}{4}y^4\bigg\rvert_0^1 
+    \implies \frac{a}{2} + \frac{b}{4} = \frac{3}{5}\\
+    & \implies a = \frac{3}{5}, b = \frac{6}{5}
+  \end{align*}
+
+  \item $f_Y(y) = ye{^-y}, y \geq 0$ 
+  \begin{align*}
+    \expt{Y} = \intv{y(ye^{-y})}{y}{0}{\infty} = -e^{-y}\left(y^{2} + 2y + 2\right)\bigg\rvert_0^\infty\\
+    = \lim\limits_{y\to\infty}\frac{y^{2} + 2y + 2}{-e^{y}} + 2 = 0 + 2\text{ hours}
+  \end{align*}
+
+  \item $f_Y(y) = \frac{3}{64}y^2(4-y), 0 < y < 4$ 
+  \begin{enumerate}
+    \item \begin{align*}
+      & \expt{Y} = \frac{3}{64}\intv{y\cdot y^2(4-y)}{y}{0}{4} = 
+      \frac{3}{64}(y^4-\frac{1}{5}y^5)\bigg\rvert_0^4 = \frac{12}{5}\\
+      & \var{Y} = \expt{Y^2} - \expt{Y}^2 = 
+      \frac{3}{64}\intv{y^2\cdot y^2(4-y)}{y}{0}{4} - \left(\frac{12}{5}\right)^2\\
+      & = \frac{3}{64}\left(\frac{4}{5}y^5 - \frac{1}{6}y^6\right)
+      \bigg\rvert_0^4 - \frac{144}{25} = \frac{16}{25} 
+    \end{align*}
+    \item Let the weekly cost be $C = 200Y$.
+    \begin{align*}
+      & \expt{C} = 200\expt{Y} = \$480\\
+      & \var{C} =  \expt{(200Y)^2} -  (200\expt{Y})^2 = 25600 \implies \sigma = \$160
+    \end{align*}
+    
+    \item The probability of it exceeding \$600 is given by
+    \[
+      \pr{C > 600} = \pr{Y > 3} = 1 - \intv{f_Y(y)}{y}{0}{3} \approx 0.2617
+    \]
+    So, we should expect the operating costs
+    to exceed $\$600$ about every 1 in 3 weeks. This is often enough
+    that it could be considered a concern.
+  \end{enumerate}
+
+  \item $f_Y(y) = \begin{cases}
+    1 < y \leq 10 & \implies 2y^{-3}\\
+    y > 10 & \implies 0
+  \end{cases}$
+  \[
+    \expt{Y} = 
+    \intv{y\cdot 2y^{-3}}{y}{1}{10} + \intv{y\cdot 0}{y}{10}{\infty}
+    = \intv{2y^{-2}}{y}{1}{10} + 0 = 1.8
+  \]
+
+  \item Let $\unidist{Y}{0}{60}$ 
+  be the time at which the passenger arrives\\
+  $\implies f_Y(y) = \frac{1}{60}, y\in(0,60)$ and $F_Y(y) = \frac{y}{60}, y\in(0,60)$\\
+  Assumptions: \begin{itemize}
+    \item Both trains cannot be at the station.
+    \item The train departs the same time it arrives.
+  \end{itemize}
+  The chance to catch $B$ lies in intervals: $(0, 5), (15, 20), (30,35), (45,50)$,
+  which are the spaces in between the departures of A.
+  Then, the total chance to catch $B$ from 7:00 to 8:00 AM is
+  \begin{align*}
+    \pr{B} = \sum_{y=0}^{3}F_Y(15y+5) - F_Y(15y) = \frac{1}{3}\\
+    \pr{A} = 1 - \pr{B} = \frac{2}{3}\\
+  \end{align*}
+  Thus, the passenger gets on train A two thirds of the time.
+
+  \item Let $\unidist{Y}{0}{L}$ be the point chosen $\implies f_Y(y) = \frac{1}{L}, F_Y(y) = \frac{y}{L}$.\\
+  We want to know when \[
+    \frac{\min(F_Y(L - \alpha), F_Y(\alpha))}{\max(F_Y(L - \alpha), F_Y(\alpha))} 
+    = \frac{\min(L - \alpha, \alpha)}{\max(L - \alpha, \alpha)} < \frac{1}{4}, 0 < \alpha < L
+  \]
+  This must mean that in the case of $\alpha < L - \alpha$\[
+    \frac{\alpha}{L - \alpha} < \frac{1}{4} \implies \alpha < \frac{1}{5}
+  \]
+  And in the other case, \[
+    \frac{L - \alpha}{\alpha} < \frac{1}{4} \implies \alpha > \frac{4L}{5}
+  \]
+  Thus, the probability of the ratio of the short to long segment 
+  being less than $\frac{1}{4}$ is
+  \[
+    1 - \pr{\frac{L}{5} \leq  Y \leq \frac{4L}{5}} 
+    = 1 - \left(F_Y\left(\frac{4L}{5}\right) - F_Y\left(\frac{L}{5}\right)\right) = \frac{2}{5}
+  \]
+  \item Let $\unidist{Y}{0}{30}$ represent the time the bus gets here
+  $\implies f_Y(y) = \frac{1}{30}, F_Y(y) = \frac{y}{30}$.
+  \begin{enumerate}
+    \item $\pr{Y > 10} = 1 - F_Y(10) = \frac{2}{3}$
+    \item $\pr{Y > 25 \mid Y > 15} = \frac{\pr{Y > 25}}{Y > 15} = \frac{1 - F_Y(25)}{1 - F_Y(15)} = \frac{1}{3}$
+  \end{enumerate}
+
+  \item $\unidist{Y}{\theta_1}{\theta_2}, \pr{Y \leq m} = 0.5
+  \implies m = \phi_{0.5} = \frac{\theta_2 + \theta_1}{2}$
+
+  \item $\unidist{X}{a}{100} \implies f_X(x) = \frac{1}{100-a}, F_X(x) = \frac{x}{100-a}$\\
+  $\unidist{Y}{1.25a}{100} \implies f_Y(y) = \frac{1}{100-1.25a}, F_Y(y) = \frac{y}{100-1.25a}$
+  \begin{align*}
+    & \expt{X^2} = \frac{19600}{3} = 
+    \frac{1}{100-a}\intv{x^2}{x}{a}{100} = 
+    \frac{x^3}{3(100-a)}\bigg\rvert_a^{100} = 
+    \frac{100^3-a^3}{3(100-a)} = \frac{(100-a)(100^2+100a+a^2)}{3(100-a)}\\
+    & 19600 = 100^2+100a+a^2 \implies a = 60
+  \end{align*}
+  Now, $F_Y(y) = \frac{y}{25} \implies F^{-1}_Y(y) = 25y$.
+  So $\phi_{0.8} = F^{-1}_Y(0.8) = 25(0.8) = 20$
+\end{enumerate}
+
+\end{document}

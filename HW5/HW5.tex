@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+\newcommand{\inte}[0]{\text{int}}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+  
+\newcommand{\pr}[1]{\operatorname{P}(#1)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\newtheorem*{theorem}{Theorem}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+  \item $R = \set{00,0,1,2,\ldots,36}$; $P(W) = \frac{12}{38}$\\
+  Let $Y$ represent $y$ trials until $r$ wins $\implies \nbinomdist{Y}{r}{P(W)} 
+  \wedge \pr{Y=y} = \binom{y-1}{r-1}\pr{W}^r\pr{W^c}^{y-r}$
+  \begin{enumerate}
+    \item In this case, $\nbinomdist{Y}{5}{\pr{W^c}}$ and $y = 5$.\\
+    $\pr{Y=5}=\binom{5-1}{5-1}\pr{W^c}^{5}\pr{W^c}^0 = (\frac{26}{38})^5 \approx 0.149951$
+    \item $\nbinomdist{Y}{1}{\pr{W}} \implies 
+    \pr{Y=4} = \binom{4-1}{1-1}\pr{W^c}^{3}\pr{W}^{1} = (\frac{26}{38})^3\cdot\frac{12}{38} \approx 0.10115\ldots$
+  \end{enumerate}
+  
+  \item $\pr{C} = 41\%$\\
+  $\geodist{Y}{\pr{C^c}} \implies \pr{Y=y} = \pr{C}^{y-1}\pr{C^c} = (41\%)^{y-1}(59\%)$ for $y = 1,2,\ldots$\\
+  This is geometric because we want only the first success.
+
+  \item $\geodist{Y}{p}$
+  \begin{enumerate}
+    \item \begin{theorem}
+      $\pr{Y > a} = (1-p)^a$
+    \end{theorem}
+    \begin{proof}
+      \begin{align*}
+        & P(Y > a) = \sum_{y=a+1}^{\infty}(1-p)^{y-1}p 
+        = \frac{p}{1-p}\sum_{y=a+1}^{\infty}(1-p)^{y}\\
+        & \Let S = \sum_{y=a+1}^{\infty}(1-p)^{y} = (1-p)^{a+1} + (1-p)^{a+2} + \ldots\\
+        & (1-p)S = (1-p)^{a+2} + (1-p)^{a+3} + \ldots \implies S-(1-p)S = S-S+Sp \implies S = \frac{(1-p)^{a+1}}{p}\\
+        & P(Y > a) = \frac{p}{1-p}\sum_{y=a+1}^{\infty}(1-p)^{y} = \frac{p}{1-p}\cdot \frac{(1-p)^{a+1}}{p} = (1-p)^{a}\\
+        & \therefore P(Y > a) = (1-p)^{a}
+      \end{align*}
+    \end{proof}
+    
+    \item \begin{theorem}
+      $\pr{Y = a+k \mid Y > a} = \pr{Y = k}$
+      \begin{proof}
+        \begin{align*}
+          & \pr{Y=k} = (1-p)^{k-1}p\\
+          & \pr{Y = a+k \mid Y > a} = \frac{\pr{Y=a+k \cap Y > a}}{\pr{Y>a}} = 
+          \frac{\pr{Y=a+k \cap (Y = a + 1 \cup Y = a + 2 \ldots \cup \ldots Y = a+k)}}{\pr{Y>a}}\\
+          & = \frac{\pr{Y=a+k}}{\pr{Y > a}} = \frac{(1-p)^{a+k-1}p}{(1-p)^{a}} = (1-p)^{k-1}p\\
+          & \therefore \pr{Y = a+k \mid Y > a} = \pr{Y = k} = (1-p)^{k-1}p
+        \end{align*}
+      \end{proof}
+    \end{theorem}
+  \end{enumerate}
+
+  \item $\geodist{Y}{0.3} \implies \pr{Y=y} = (0.7)^{y-1}(0.3)$\\
+  $\pr{Y>a} = (0.7)^a \geq 0.1 \iff a\ln(0.7) \geq \ln(0.1) \implies a \geq \frac{\ln(0.1)}{\ln(0.7)}$\\
+  Pick $a \geq \frac{\ln(0.1)}{\ln(0.7)}$ so that $\pr{Y>a} \geq 0.1$
+
+  \item $\pr{A} = 40\%$\\
+  $\nbinomdist{Y}{3}{\pr{A}} \implies \pr{Y=y} = \binom{y-1}{3-1}\pr{A}^{3-1}\pr{A^c}^{y-3}$\\
+  $\pr{Y=10} = \binom{10-1}{3-1}\pr{A}^{3-1}\pr{A^c}^{10-3} = \binom{9}{2}(40\%)^2(60\%)^7 \approx 0.1612\ldots$
+
+  \item $\pr{B} = 60\%$
+  \begin{enumerate}
+    \item Let $\geodist{Y}{40\%}$ represent the dropped calls until pick-up $\implies \pr{Y=y} = (60\%)^{y-1}(40\%)$\\
+    \begin{enumerate*}
+      \item $\pr{Y=1} = 40\%$
+      \item $\pr{Y=2} = \frac{6}{25}$
+      \item $\pr{Y=3} = \frac{18}{125}$
+    \end{enumerate*}
+    \item Let $\nbinomdist{Y}{2}{40\%}$ represent the dropped calls until both my friend and I are received.\\
+    Then the probability that four tries will be necessary is
+    \[
+      \pr{Y=4} = \binom{4-1}{2-1}\pr{B^c}^{4-2}\pr{B}^2 = \frac{1323}{10000} = 0.1323
+    \]
+  \end{enumerate}
+  
+  \item $\pr{D} = 0.4$\\
+  Let $\geodist{Y}{\pr{D}}$ represent the number of hurricanes until damage occurs$\implies 
+  \pr{Y=y} = (0.6)^{y-1}(0.4)$\\
+  \begin{tabular}{|c|c|}
+    \hline
+    $y$ & $\pr{Y=y}$\\\hline
+    2 & 0.24\\\hline
+    3 & 0.144\\\hline
+    4 & 0.0864\\\hline
+    5 & 0.05184\\\hline
+  \end{tabular}
+  
+  \item $\hypegeodist{Y}{100}{6}{10} \implies \pr{Y=y} = 
+  \frac{\binom{6}{y}\binom{94}{10-y}}{\binom{100}{10}}$
+  \begin{enumerate}
+    \item $\pr{Y=0} = \frac{\binom{6}{0}\binom{94}{10}}{\binom{100}{10}} \approx 0.5223\ldots$
+    \item $\pr{Y > 2} = \pr{Y \geq 3} = \sum_{y=3}^{6}\pr{Y=y} \approx 0.0126$
+  \end{enumerate}
+
+  \item \begin{enumerate}
+    \item Let $\hypegeodist{Y}{20}{2}{4}$ represent the number of defects$\implies 
+    \pr{Y=y} = \frac{\binom{2}{y}\binom{18}{4-y}}{\binom{20}{4}}$\\
+    We want zero defects, this probability is $\pr{Y=0} = \frac{12}{19}$, 
+    but because we want the probability of rejection this
+    is simply $1 - \pr{Y=0} = \frac{7}{19} \approx 0.3684\ldots$ 
+    \item $Y$ changes to $\nbinomdist{Y}{4}{0.9} \implies 
+    \pr{Y=y} = \binom{y-1}{4-1}(0.9)^4(0.1)^{y-4}$\\
+    Then, the probability of acceptance is $\pr{Y=4} = (0.9)^4$,
+    but we want to know the rejection which is then $1 - \pr{Y=4} = 0.3439$
+  \end{enumerate}
+  
+  \item Let $\hypegeodist{Y}{20}{8}{6} \implies \pr{Y=y} = \frac{\binom{8}{y}\binom{12}{6-y}}{\binom{20}{6}}$ represent the number of jurors who are black.\\
+  $E(Y) = \frac{6\cdot 8}{20} = 2.4$\\
+  \begin{tabular}{|c|c|}
+    \hline
+    $y$ & $\pr{Y=y}$\\\hline
+    0 & 0.0238\\\hline
+    1 & 0.1635\\\hline
+    2 & 0.3576\\\hline
+    3 & 0.3179\\\hline
+    4 & 0.1192\\\hline
+    5 & 0.0173\\\hline
+    6 & 0.0007\\\hline
+  \end{tabular}\\
+  On average, we should expect about 2 or 3 black jurors.
+  There is reason to doubt the randomness of this selection.\\
+  In particular, the probability of choosing just one black juror is 16.35\%, 
+  while the most likely configurations involve either 2 or 3 at 35.67\% and 31.79\% respectively.
+  
+  \item Let $\hypegeodist{Y}{20}{15}{4}$ represent the number of sampled cocaine packets\\
+  $\implies \pr{Y=y} = \frac{\binom{15}{y}\binom{5}{4-y}}{\binom{20}{4}}$\\
+  
+  Let $X$ represent the number of noncocaine packets. 
+  Because $X$ depends on how many noncocaine packets were taken in $Y$,
+  there would be $5 - (4-y) = 1+y$ noncocaine packets left.\\
+  Then $\hypegeodist{(X | Y)}{16}{y+1}{2} \implies \pr{X=x \mid Y=y} = \frac{\binom{y+1}{x}\binom{16-(y+1)}{2-x}}{\binom{16}{2}}$\\
+  
+  The probability of six packets with 4 containing cocaine and 2 not is
+  \[
+    \pr{Y = 4}\pr{X = 2 \mid Y = 4} = \frac{91}{3876} \approx 0.0235
+  \]
+  \item $\pr{W} = \frac{1}{\binom{30}{6}}$\\
+  If each ticket is \$1 then the state makes \$800,000.
+  The state will lose money if there are at least 2 winners.\\
+  Thus, let $\binomdist{Y}{800000}{\pr{W}}$
+  represent the number of winners out of 800,000 participants\\
+  $\implies \pr{Y=y} = \binom{800000}{y}\pr{W}^y\pr{W^c}^{800000-y}$
+  Then, the probability that the state will lose money is given by
+  \[
+    \pr{Y\geq 2} = 1 - \pr{Y=0} - \pr{Y=1} \approx 0.3898\ldots
+  \]
+  % \item $\geodist{Y}{p} \implies \pr{Y=y} = (1-p)^{y-1}p$\\
+  % \begin{align*}
+  %   &\pr{Y = 2y+1} = \sum_{y = 0}^{\infty}(1-p)^{(2y+1)-1}p = \sum_{y = 0}^{\infty}(1-p)^{2y}p\\
+  %   & p\sum_{y = 0}^{\infty}(1-p)^{2y} = \frac{1}{(1-p)}
+  % \end{align*}
+  % \item hm
+  % \item hm
+\end{enumerate}
+\end{document}
