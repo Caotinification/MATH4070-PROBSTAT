@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+\usepackage[normalem]{ulem}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\osset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\circ\mkern.5mu$}\cr}}}
+\newcommand{\csset}{\mathrel{\ooalign{$\subseteq$\cr
+  \hidewidth\raise.225ex\hbox{$\bullet\mkern.5mu$}\cr}}}
+  
+\newcommand{\pr}[1]{\operatorname{P}\left(#1\right)}
+\newcommand{\var}[1]{\operatorname{Var}(#1)}
+\newcommand{\cov}[1]{\operatorname{Cov}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+\newcommand{\iid}{\operatorname{i.i.d.}}
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+\newcommand{\unidist}[3]{#1 \sim \operatorname{Uniform}(#2, #3)}
+\newcommand{\normdist}[3]{#1 \sim \operatorname{Normal}(#2, #3)}
+\newcommand{\expdist}[2]{#1 \sim \operatorname{Exponential}(#2)}
+\newcommand{\gamdist}[3]{#1 \sim \operatorname{Gamma}(#2, #3)}
+\newcommand{\chidist}[2]{#1 \sim \operatorname{\chi^2}(#2)}
+\newcommand{\betdist}[3]{#1 \sim \operatorname{Beta}(#2, #3)}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[4]{\int_{#3}^{#4} #1 \diff #2}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\newtheorem*{theorem}{Theorem}
+
+
+\title{\MakeUppercase{\jobname}}
+\author{Justin Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\footnotetext{All decimals are rounded to 4 places.}
+
+\begin{enumerate}
+  \item $\expdist{\set{Y_1, Y_2, \ldots, Y_6} \iid}{\beta}$\\
+  $\pr{\min\set{Y_1, Y_2, \ldots, Y_6} \geq a}$\\
+  First, we compute \[
+    \min\set{Y_1, Y_2, \ldots, Y_6} = 
+  \]
+\end{enumerate}
+
+\end{document}

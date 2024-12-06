@@ -1,0 +1,278 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.2in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\proof}[1]{\textbf{Proof: #1}}
+\newcommand{\counter}[1]{\textbf{Counterexample: #1}}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+\newcommand{\inte}[0]{\text{int}}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\defn}[1]{\textbf{#1}:}
+\newcommand{\mdefn}[1]{$\mathbf{#1}$:}
+
+\newcommand{\pr}[1]{\operatorname{P}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+\newcommand{\var}[1]{\operatorname{Var}\left[#1\right]}
+\newcommand{\cov}[1]{\operatorname{Cov}\left[#1\right]}
+
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+
+\newcommand{\unidist}[3]{#1 \sim \operatorname{Uniform}(#2, #3)}
+\newcommand{\normdist}[3]{#1 \sim \operatorname{Normal}(#2, #3)}
+\newcommand{\expdist}[2]{#1 \sim \operatorname{Exponential}(#2)}
+\newcommand{\gamdist}[3]{#1 \sim \operatorname{Gamma}(#2, #3)}
+\newcommand{\chidist}[2]{#1 \sim \operatorname{\chi^2}(#2)}
+\newcommand{\betdist}[3]{#1 \sim \operatorname{Beta}(#2, #3)}
+
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+\newcommand{\setcompl}[1]{\overline{#1}}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[4]{\int_{#3}^{#4} #1 \diff #2}
+
+\renewcommand{\and}{\text{ and }}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+\section{Continuous Random Variable}
+
+\defn{Cumulative Distribution Function $F_Y(y)$} The probability that $Y$ will take on a value less than $y$.
+
+\defn{Properties}
+\begin{itemize*}
+    \item $\lim_{y\to-\infty}F_{Y}(Y) = 0$
+    \item $\lim_{y\to\infty}F_{Y}(Y) = 1$
+    \item $F_{Y}(b) - F_{Y}(a) = \pr{a \leq Y \leq b}$
+\end{itemize*}
+
+\defn{Probability Density Function $f_Y(y)$} The probability per unit length.\\
+\defn{Quantile $\phi_{p}$} $F_{Y}(y) = \pr{y \leq \phi_{p}} = p$ 
+
+\subsection{Multivariate Probability Distributions}
+\defn{Joint CDF} $F(y_1, y_2) = \pr{Y_1 \leq y_1, Y_2 \leq y_2} = $ \[
+    \intv{ \intv{ f(t_1, t_2) }{t_1}{-\infty}{y_1} }{t_2}{-\infty}{y_2}
+\]\\
+\defn{Joint PDF} $f(y_1, y_2)$\\
+\defn{Marginal PDF} \[
+    (1) f_{y_1}(y_1) = \intv{ f(y_1, y_2) }{y_2}{}{}
+    \qquad
+    (2) f_{y_2}(y_2) = \intv{ f(y_1, y_2) }{y_1}{}{}
+\]
+\defn{Conditional Density} \[
+    f(y_1 \mid y_2)
+    = \frac{f(y_1, y_2)}{f_{y_2}(y_2)} 
+    = \frac{f(y_1, y_2)}{\intv{ f(y_1, y_2) }{y_1}{}{}}
+\]
+\subsection{Independence}
+$Y_1, Y_2$ are independent
+\begin{itemize}
+    \item $\iff F(y_1, y_2) = F_{y_1}(y_2)F_{y_2}(y_2)$
+    \item $\iff f(y_1, y_2) = f_{y_1}(y_1)f_{y_2}(y_2)$
+    \item $\iff f(y_1 \mid y_2) = f_{y_1}(y_1)$
+    \item $\iff \expt{Y_1, Y_2} = \expt{Y_1}\expt{Y_2}$
+    \item $\implies f(y_1, y_2) = g(y_1)h(y_2)$
+\end{itemize}
+\subsection{Expectation}
+\defn{Expectation and Joint Expectation}
+\[
+    (1) \expt{Y} = \intv{yf_{Y}(y)}{y}{}{} 
+    \qquad
+    (2) \expt{Y_1Y_2} = \intv{ \intv{ y_1y_2f(y_1, y_2) }{y_1}{}{} }{y_2}{}{}
+\]
+\defn{Variance and Joint Variance}
+\[
+    (1) \var{Y_1} = \expt{Y^2} - \expt{Y}^2
+    \qquad
+    (2) \var{aY_1 \pm bY_2} = a^2\var{Y_1} + b^2\var{Y_2} \pm 2ab\cov{Y_1, Y_2}
+\]
+\defn{Covariance}
+\[
+    \cov{Y_1, Y_2} = \expt{Y_1Y_2} - \expt{Y_1}\expt{Y_2}
+\]
+\defn{Properties} \begin{itemize}
+    \item $\expt{a\cdot f(y) + b\cdot g(y) + \cdots} = a\expt{f(y)} + b\expt{g(y)} + \cdots$
+    \item $\var{af(y) + bg(y) + c} = a^2\var{f(y)} + b^2\var{g(y)}$
+    \item If $Y_1, Y_2$ independent $\implies \cov{Y_1, Y_2} = 0$
+\end{itemize}
+
+\subsubsection{Conditional Expectation}
+\[
+    \expt{Y_1 \mid Y_2 = y_2} 
+    = \intv{ y_1f(y_1 \mid y_2) }{y_1}{}{}
+    = \intv{y_1 \frac{f(y_1, y_2)}{ \intv{ f(y_1, y_2) }{y_1}{}{} }}{y_1}{}{}
+\]
+\clearpage
+\section{Continuous Distributions Dictionary}
+\begin{itemize}
+    \item \defn{$\unidist{Y}{a}{b}$} \[
+        f(y) = \frac{1}{b-a};
+        \enspace y \in [a,b]
+        \implies \mu = \frac{a+b}{2} \and \sigma^2 = \frac{(b-a)^2}{12}
+    \]
+    \[
+        M_Y(t) = \frac{e^{tb} - e^{ta}}{t(b-a)}
+    \]
+    \item \defn{$\normdist{Y}{\mu}{\sigma^2}$}\footnote{CDF is not in closed form.} \[
+        f(y) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left[ -\frac{(y-\mu)^2}{2\sigma^2} \right];
+        \enspace y\in(\pm \infty)
+        \implies \mu = \mu \and \sigma^2 = \sigma^2
+    \]
+    \[
+        M_Y(t) = \exp\left[ \mu t + \frac{t^2\sigma^2}{2} \right]
+    \]
+    \item \defn{$\gamdist{Y}{\alpha}{\beta}$} \[
+        f(y) = \frac{y^{\alpha-1}\exp\left[ -y\beta^{-1} \right]}{\Gamma(\alpha)\beta^\alpha};
+        \enspace y\in (0, \infty)
+        \implies \mu = \alpha\beta \and \sigma^2 = \alpha\beta^2
+    \]
+    \[
+        M_Y(t) = (1-\beta t)^{-\alpha}
+    \]
+    \item \defn{$\expdist{Y}{\beta} = \gamdist{Y}{1}{\beta}$} \[
+        f(y) = \beta^{-1}\exp\left[ -y\beta^{-1} \right];
+        \enspace y\in (0, \infty)
+        \implies \mu = \beta \and \sigma^2 = \beta^2
+    \]
+    \[
+        M_Y(t) = (1-\beta t)^{-1}
+    \]
+    \item \defn{$\chidist{Y}{\nu} = \gamdist{Y}{\nu/2}{2}$}
+    \[
+        f(y) = \frac{y^{\nu/2-1}\exp\left[ -y/2 \right]  }{\Gamma(\nu/2)2^{\nu/2}};
+        \enspace y^2 > 0
+        \implies \mu = \nu \and \sigma^2 = 2\nu
+    \]
+    \item \defn{$\betdist{Y}{\alpha}{\beta}$} \[
+        f(y) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}y^{\alpha - 1}(1-y)^{\beta - 1};
+        \enspace y\in (0,1)
+        \implies \mu = \frac{\alpha}{\alpha + \beta} \and \sigma^2 = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha + \beta + 1)}
+    \]
+\end{itemize}
+\subsection{Special Cases}
+\begin{itemize}
+    \item $\chidist{Y}{1} = \left[ \normdist{Y}{0}{1} \right]^2$
+    \item $\betdist{Y}{1}{1} = \unidist{Y}{0}{1}$
+\end{itemize}
+\subsection{Gamma Function}
+\begin{align*}
+    \Gamma(\alpha) = \intv{ y^{\alpha - 1}e^{-y} }{y}{0}{\infty}\\
+    \Gamma(k\in\ns{N}) = (k-1)!
+\end{align*}
+\subsection{Standardizing the Normal Distribution}
+If $\normdist{Y}{\mu}{\sigma^2} \implies $ \[
+    \normdist{Z = \frac{Y - \mu}{\sigma}}{0}{1}
+\]
+\clearpage
+\newpage
+\section{Discrete Distribution Dictionary}
+\begin{itemize}
+    \item \defn{$\binomdist{Y}{n}{p}$}
+    Observing $y \in [0,n]$ successes in fixed $n$ trials.
+    \[
+        \pr{Y=y} = \binom{n}{y}p^y(1-p)^{n-y} \implies \mu = n\cdot p \and \sigma^2 = np(1-p)
+    \]
+    \[
+        M_Y(t) = \left[pe^t+(1-p)\right]^n
+    \]
+    \item \defn{$\nbinomdist{Y}{r}{p}$}
+    Observing the fixed $r^{th}$ success in $y \in [r, \infty)$ trials.
+    \[
+        \pr{Y=y} = \binom{y-1}{r-1}p^{r}(1-p)^{y-r} \implies \mu = \frac{r}{p} \and \sigma^2 = \frac{r(1-p)}{p^2}
+    \]
+    \[
+        M_Y(t) = {\left[\frac{pe^t}{1-(1-p)e^t}\right]}^r
+    \]
+    \item \defn{$\geodist{Y}{p} = \operatorname{NB}(1,p)$}
+    Observing 1 success in $y \in [1, \infty)$ trials.
+    \[
+        \pr{Y=y} = (1-p)^{y-1}p \implies \mu = \frac{1}{p} \and \sigma^2 = \frac{1-p}{p^2}
+    \]
+    \[
+        M_Y(t) = \frac{pe^t}{1-(1-p)e^t}
+    \]
+    \item \defn{$\hypegeodist{Y}{N}{r}{n}$}
+    Observing $y \in \begin{cases}
+        [0, n] \If{} n \leq r,\\
+        [0, r] \If{} n > r
+    \end{cases}$ successes in $n$ draws, without replacement,
+    from a population of $N$ that contains $r$ success states.
+    \[
+        \pr{Y=y} = \frac{\binom{r}{y}\binom{N-r}{n-y}}{\binom{N}{n}}
+        \implies \mu = \frac{r\cdot n}{N} \and \sigma^2 = 
+        n\left(\frac{r}{N}\right)\left(\frac{N-r}{N}\right)\left(\frac{N-n}{N-1}\right)
+    \]
+
+    \item \defn{$\poisson{Y}{\lambda}$}
+    Observing $y\in [0,\infty)$ indepedent events that occur with a
+    constant mean rate of $\lambda$ in a fixed interval of time or area.
+    Note: $\poisson{Y}{n\cdot p} = \binomdist{Y}{n}{p}$ if $n$ is very large, or $p$ is small.
+    That is to say, it may be used to approximate the binomial distribution.
+    \[
+        \pr{Y=y} = \frac{\lambda^{y}e^{-\lambda}}{y!} \implies \mu = \lambda \and \sigma^2 = \lambda
+    \]
+    \[
+        M_Y(t) = e^{\lambda(e^t-1)}
+    \]
+\end{itemize}
+\clearpage
+\subsection{Moment Generating Functions}
+\defn{MGF of $Y$} \[
+    M_Y(t) = \expt{e^{tY}} = \intv{e^{ty}f(y)}{y}{}{}
+\]\\
+\defn{$k^{\text{th}}$ Moment of $Y$} $\expt{Y^k}$\\
+\[
+    \drv{}{t}{k}M_Y(t)\bigg\rvert_{t=0} = \begin{cases}
+        k = 1 & \implies \expt{Y}\\
+        k = 2 & \implies  \expt{Y^2}\\
+        \vdots\\
+        k = n & \implies \expt{Y^n}
+    \end{cases}
+\]
+\section{Calculus}
+\defn{Chain Rule} \[
+    (f\circ g)' = (f\circ g)'g'
+\]
+\defn{Product Rule} \[
+    (f\cdot g)' = f'g + fg'
+\]
+\defn{Quotient Rule} \[
+    \left(\frac{f}{g}\right)' = \frac{f'g-fg'}{g^2}
+\]
+\defn{Integration by parts} \[
+    \intv{u}{v}{}{} = uv - \intv{v}{u}{}{}
+\]
+\defn{Power Rule} \[
+    \intv{x^n}{x}{}{} = \frac{1}{n+1}x^{n+1}
+\]
+\end{document}
