@@ -1,0 +1,479 @@
+\documentclass[fontsize=12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[margin=0.2in]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathtools}
+\usepackage[inline]{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[super]{nth}
+\usepackage{hyperref}
+
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\If}[1]{\textrm{ if #1}}
+\newcommand{\then}[1]{\textrm{ then #1}}
+\newcommand{\ForAll}[0]{\textrm{ for all }}
+\newcommand{\Let}[0]{\textrm{Let }}
+\newcommand{\ns}[1]{\mathbb{#1}}
+\newcommand{\Reals}[0]{\ns{R}}
+\newcommand{\lub}[1]{\text{lub$_{#1}$}}
+\newcommand{\glb}[1]{\text{glb$_{#1}$}}
+\newcommand{\pointspace}[3]{\langle#1, #2, #3\rangle}
+\newcommand{\pointplane}[2]{\langle#1, #2\rangle}
+\newcommand{\inte}[0]{\text{int}}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\defn}[1]{\textbf{#1}:}
+\newcommand{\mdefn}[1]{$\mathbf{#1}$:}
+
+\newcommand{\pr}[1]{\operatorname{P}(#1)}
+\newcommand{\expt}[1]{\operatorname{E}[#1]}
+\newcommand{\var}[1]{\operatorname{Var}\left[#1\right]}
+\newcommand{\cov}[1]{\operatorname{Cov}\left[#1\right]}
+\newcommand{\iid}{\operatorname{i.i.d.}}
+
+\newcommand{\binomdist}[3]{#1 \sim \operatorname{Binomial}(#2, #3)}
+\newcommand{\geodist}[2]{#1 \sim \operatorname{Geometric}(#2)}
+\newcommand{\nbinomdist}[3]{#1 \sim \operatorname{NB}(#2, #3)}
+\newcommand{\hypegeodist}[4]{#1 \sim \operatorname{Hypergeometric}(#2, #3, #4)}
+\newcommand{\berndist}[2]{#1 \sim \operatorname{Bernoulli}(#2)}
+
+\newcommand{\unidist}[3]{#1 \sim \operatorname{Uniform}(#2, #3)}
+\newcommand{\normdist}[3]{#1 \sim \operatorname{Normal}(#2, #3)}
+\newcommand{\expdist}[2]{#1 \sim \operatorname{Exponential}(#2)}
+\newcommand{\gamdist}[3]{#1 \sim \operatorname{Gamma}(#2, #3)}
+\newcommand{\chidist}[2]{#1 \sim \operatorname{\chi^2}(#2)}
+\newcommand{\betdist}[3]{#1 \sim \operatorname{Beta}(#2, #3)}
+
+\newcommand{\poisson}[2]{#1 \sim \operatorname{Poisson}(#2)}
+
+\newcommand{\setcompl}[1]{\overline{#1}}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand{\drv}[3]{\frac{\diff#1^{#3}}{\diff#2^{#3}}}
+\newcommand{\pdrv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\intv}[4]{\int_{#3}^{#4} #1 \diff #2}
+
+\renewcommand{\and}{\text{ and }}
+
+\renewcommand{\thefootnote}{\Roman{footnote}}
+
+\setlength{\parindent}{0pt}
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{counterexample}{Counterexample}
+\newtheorem*{example}{Example}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{remark}{Remark}
+
+\begin{document}
+\section{Set Theory}
+\begin{definition}(Set Operations)
+    Given two sets $A,B$, we have that
+    \begin{itemize}
+        \item $A - B = A \cap B^c$
+        \item $(A \cap B) \cup (A \cap B^c) = A$
+        \item Neither$ \implies A^c \cap B^c = {(A \cup B)}^c$
+        \item Xor$ \implies (A \cap B^c) \cup (A^c \cap B)$
+        \item At least one$ \implies A \cup B$
+    \end{itemize}
+\end{definition}
+
+
+
+\section{Combinatorics}
+\begin{definition}[Counting Tools]\end{definition}
+\begin{enumerate}[label=(\alph*)]
+    \item \mdefn{m\times n} Number of pairs between $m$ and $n$ items.
+    \item \mdefn{m^n} Number of ways to fill $n$ slots with $m$ objects.
+    \item \mdefn{P_r^n=\frac{n!}{(n-r)!}} Number of ways of ordering $n$ distinct objects taken $r$ at a time.
+    \item \mdefn{\binom{n}{r}=\frac{n!}{r!(n-r)!}} Number of subsets, each of size $r$, that can be formed from $n$ objects.
+    \item \mdefn{\binom{n}{n_1,n_2,\ldots,n_k} = \frac{n!}{n_1!n_2!\ldots n_k!}}
+    Number of ways of partitioning $n$ distinct objects into $k$ distinct groups
+    containing $n_1, n_2,\ldots n_k$ objects. This has restriction: $\sum_{i=1}^{k}n_i = n$
+\end{enumerate}
+
+
+
+\section{Conditional Probability}
+\begin{definition}[A given B occurred]
+    $\pr{A \mid B} = \frac{\pr{A \cap B}}{\pr{B}}$
+\end{definition}
+\begin{definition}[Independence]
+Two events $A,B$ are independent $\iff$
+\begin{enumerate}[label=(\roman*)]
+    \item $\pr{A\mid B} = \pr{A} \iff \pr{B\mid A} = \pr{B}$
+    \item $\pr{A\cap B} = \pr{A}\pr{B}$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Probability]
+    
+\end{definition}
+
+\begin{corollary}[Properties]\end{corollary}
+\begin{enumerate}[label=(\roman*)]
+    \item $\pr{A \mid A\cup B} = \frac{\pr{A}}{\pr{A \cup B}}$
+    \item $\pr{A\cap B \mid A\cup B} = \frac{\pr{A \cap B}}{\pr{A \cup B}}$
+    \item $\pr{A^c \mid B} = 1 - \pr{A \mid B}$
+    \item $\pr{A} = \pr{A \cap B} + \pr{A \cap B^c} \equiv \pr{A\mid B}\pr{B} + \pr{A\mid B^c}\pr{B^c}$
+    \item If $A,B$ are independent then $\implies (A^c, B), (A, B^c)$ and $(A^c, B^c)$ are all independent.
+    \item $\pr{A\cap B} = \pr{B \mid A}\pr{A} = \pr{A \mid B}\pr{B} $
+    \item $\pr{A \cap B \cap C} = \pr{A}\pr{B\mid A}\pr{C \mid B\cap A}$
+\end{enumerate}
+
+\subsection{Bayesian}
+\begin{theorem}[Total Law of Probability]
+    If $\set{B_1, B_2, \ldots, B_n}$ is a partition of $S \implies $ \[
+        \pr{A} = \sum_{k=1}^{n}\pr{A \mid B_k}\pr{B_k} = \sum_{k=1}^{n}\pr{A \cap B_k}
+    \]
+\end{theorem}
+
+
+\begin{theorem}[Bayes' Theorem] \[
+    \pr{B_j \mid A} = 
+    \frac{\pr{A \mid B_j}\pr{B_j}}{\sum\limits_{k}\pr{A \mid B_k}\pr{B_k}};
+    \pr{A\mid B} = \frac{\pr{B \mid A}\pr{A}}{\pr{B}}
+\]
+\end{theorem}
+
+
+
+\section{Discrete $\big\vert$ Continuous Random Variables}
+Let $D$ and $C$ denote a discrete and continuous random variable respectively.
+
+\begin{definition}[Expected value $\mu$]
+$\expt{Y} = \begin{cases}
+    D &\implies \sum_{y}y\cdot \pr{Y=y}\\
+    C & \implies \intv{y\cdot f_Y(y)}{y}{-\infty}{\infty}
+\end{cases}$
+\end{definition}
+
+\begin{definition}[Variance $\sigma^2$]
+$\var{Y} = \expt{Y^2} - \expt{Y}^2$
+\end{definition}
+
+\begin{definition}[Quantile]
+    \defn{$\phi_p$} $p^{\text{th}}$ quantile of $Y$. $\pr{Y \leq \phi_p} = p$ or the probability that $Y$ falls in the $\phi_p$ quantile.
+\end{definition}
+
+\begin{corollary}[Properties]\end{corollary}
+\begin{itemize}
+    \item $\expt{c \in\Reals} = c$
+    \item $\var{aY+b} = a^2\var{Y}$
+\end{itemize}
+
+\begin{definition}[Probability Density Function]
+The probability per unit length.\\
+$\begin{cases}
+    D &\implies \pr{Y = y}\\
+    C & \implies f_Y(y)
+\end{cases}$
+\end{definition}
+
+\begin{definition}[Cumulative Distribution Function]
+The probability being in a given interval.\\
+$\begin{cases}
+    D &\implies \pr{Y \leq y_\ast}\sum_{}^{y_\ast}\pr{Y = y}\\
+    C & \implies \pr{a < Y < b} = F_Y(b) - F_Y(a) = \intv{f_Y(y)}{y}{a}{b}
+\end{cases}$
+\end{definition}
+
+\subsubsection{Moment Generating Function}
+\begin{definition}[MGF of $Y$]
+\[
+    M_Y(t) = \expt{e^{tY}} = \begin{cases}
+        D   &\implies \sum_{y}e^{ty}\pr{Y=y}\\
+        C   & \implies \intv{e^{ty}f_Y(y)}{y}{}{}
+    \end{cases}
+\]
+\end{definition}
+\begin{definition}[$k^{\text{th}}$ Moment of $Y$]
+\[
+    \expt{Y^k} = \drv{}{t}{k}M_Y(t)\bigg\rvert_{t=0} = \begin{cases}
+        k = 1 & \implies \expt{Y}\\
+        k = 2 & \implies  \expt{Y^2}\\
+        \vdots\\
+        k = n & \implies \expt{Y^n}
+    \end{cases}
+\]
+\end{definition}
+
+\subsection{Joint Distributions}
+
+\begin{definition}[Joint CDF]
+$F(y_1, y_2) = \pr{Y_1 \leq y_1, Y_2 \leq y_2} = $ \[
+    \intv{ \intv{ f(t_1, t_2) }{t_1}{-\infty}{y_1} }{t_2}{-\infty}{y_2}
+\]
+\end{definition}
+
+\begin{definition}[Joint PDF]
+    $f(y_1, y_2)$
+\end{definition}
+
+
+\begin{definition}[Marginal PDF]
+\[
+    (1) f_{y_1}(y_1) = \intv{ f(y_1, y_2) }{y_2}{}{}
+    \qquad
+    (2) f_{y_2}(y_2) = \intv{ f(y_1, y_2) }{y_1}{}{}
+\]
+\end{definition}
+
+\begin{definition}[Conditional Density]
+\[
+    f(y_1 \mid y_2)
+    = \frac{f(y_1, y_2)}{f_{y_2}(y_2)} 
+    = \frac{f(y_1, y_2)}{\intv{ f(y_1, y_2) }{y_1}{}{}}
+\]
+\end{definition}
+
+\begin{definition}[Conditional Distribution]
+\[
+    F(y_1 \mid y_2) = \pr{Y_1 \leq y_1 \mid Y_2 = y_2}
+    = \intv{f(t_1 \mid  y_2)}{t_1}{-\infty}{y_1}
+    = \intv{\frac{f(t_1, y_2)}{f_{Y_2}(y_2)}}{t_1}{-\infty}{y_1}
+\]
+\end{definition}
+
+\begin{theorem}[Independence]
+$Y_1, Y_2$ are independent
+\begin{itemize}
+    \item $\iff F(y_1, y_2) = F_{y_1}(y_2)F_{y_2}(y_2)$
+    \item $\iff f(y_1, y_2) = f_{y_1}(y_1)f_{y_2}(y_2)$
+    \item $\iff f(y_1 \mid y_2) = f_{y_1}(y_1)$
+    \item $\iff \expt{Y_1, Y_2} = \expt{Y_1}\expt{Y_2}$
+    \item $\impliedby f(y_1, y_2) = g(y_1)h(y_2)$
+\end{itemize}
+\end{theorem}
+\subsection{Expectation}
+
+\begin{definition}[Joint Expectation and Variance]
+\[
+    (1) \expt{Y_1Y_2} = \intv{ \intv{ y_1y_2f(y_1, y_2) }{y_1}{}{} }{y_2}{}{}
+    \qquad
+    (2) \var{aY_1 \pm bY_2} = a^2\var{Y_1} + b^2\var{Y_2} \pm 2ab\cov{Y_1, Y_2}
+\]
+\end{definition}
+\begin{definition}[Covariance]
+\[
+    \cov{Y_1, Y_2} = \expt{Y_1Y_2} - \expt{Y_1}\expt{Y_2}
+\]
+\end{definition}
+\begin{corollary}[Corollary]
+    If $Y_1, Y_2$ independent $\implies \cov{Y_1, Y_2} = 0$
+\end{corollary}
+
+\subsubsection{Conditional Expectation}
+\[
+    \expt{Y_1 \mid Y_2 = y_2} 
+    = \intv{ y_1f(y_1 \mid y_2) }{y_1}{}{}
+    = \intv{y_1 \frac{f(y_1, y_2)}{ \intv{ f(y_1, y_2) }{y_1}{}{} }}{y_1}{}{}
+\]
+
+
+
+\section{Order Statistics}
+\begin{definition}[Order Statistics]
+    Given a set of $\iid$ ordered random variables $Y = \set{Y_1\to Y_n}$,
+    denote $\min/\max Y = Y_{(1)}, Y_{(n)}$.
+    Each $Y_k$ has pdf $f_Y(y)$ and cdf $F_Y(y)$.
+    \footnote{Note that $Y_k$ is a random variable, while $Y_{(k)}$ is an order statistic.}
+\end{definition}
+
+\begin{definition}[Sample Mean $\overline{Y}$]
+    Given $Y = \set{Y_1 \to Y_n} \iid$, then $\setcompl{Y} = \frac{1}{n}\sum_{k=1}^{n}Y_k$
+\end{definition}
+
+\begin{definition}[Sample Median $\overline{Y}$]
+    
+\end{definition}
+
+\begin{theorem}[PDF and CDF of $Y_{(n)}$]
+\begin{gather}
+    F_{Y_{(n)}}(y) = \pr{Y_{(n)} \leq y} = \pr{Y_1 \leq y}\pr{Y_2 \leq y}\ldots\pr{Y_n \leq y} = \left[ F(y) \right]^n\\
+    f_{Y_{(n)}}(y) = \drv{}{y}{}\left[ F(y) \right]^n = n\left[F_Y(y)\right]^{n-1}f_Y(y)
+\end{gather}
+\end{theorem}
+
+\begin{theorem}[PDF and CDF of $Y_{(1)}$]
+    \begin{gather}
+        F_{Y_{(1)}}(y) = 1 - \left[1 - F_Y(y)\right]^n\\
+        f_{Y_{(1)}}(y) = n\left[1 - F_Y(y)\right]^{n-1}f_Y(y)
+    \end{gather}
+\end{theorem}
+
+\begin{theorem}[PDF of $Y_{(k)}$]
+    \begin{gather}
+        f_{Y{(k)}} = \frac{n!}{(k-1)!(n-k)!}\left[F_Y(y)\right]^{k-1}\left[ 1 - F_Y(y) \right]^{n-k}
+    \end{gather}
+\end{theorem}
+
+\begin{theorem}[Central Limit Theorem]
+    Given $Y = \set{Y_1, Y_2, \ldots, Y_n}\iid$ with any distribution, and $\expt{Y_k} = \mu$ and $\var{Y_k} = \sigma^2 \implies $ \[
+        \frac{\setcompl{Y} - \mu}{\sigma/\sqrt{n}} = \sqrt{\var{\setcompl{Y}}}
+        \approx \normdist{Y}{0}{1}
+    \]
+\end{theorem}
+
+\begin{theorem}[Normal Approximation to Binomial]
+    Given $\binomdist{Y}{n}{p}$ 
+    and $\berndist{X_{i\in[1,n]}}{p}\\
+    \implies X=\binomdist{\sum_{i=1}^{n}X_i}{n}{p} 
+    \implies \frac{Y}{n} = \overline{X} 
+    \implies \expt{Y/n} = p \and \var{Y/n} = \frac{p(1-p)}{n}$
+\end{theorem}
+
+\begin{theorem}[Continuity Correction]
+\[
+    \begin{cases}
+        \pr{Y < y}      & \implies \pr{Y < y - 0.5}\\
+        \pr{Y \leq y}   & \implies \pr{Y \leq y + 0.5}\\
+        \pr{Y = y}      & \implies \pr{y - 0.5 < Y < y+ 0.5}\\
+        \pr{Y > y}      & \implies \pr{Y > y + 0.5}\\
+        \pr{Y \geq y}   & \implies \pr{Y \geq y - 0.5}
+    \end{cases}
+\]
+\end{theorem}
+
+
+
+\clearpage
+\section{Discrete Distribution Dictionary}
+\begin{itemize}
+    \item \defn{$\binomdist{Y}{n}{p}$}
+    Observing $y \in [0,n]$ successes in fixed $n$ trials.
+    \[
+        \pr{Y=y} = \binom{n}{y}p^y(1-p)^{n-y} \implies \mu = n\cdot p \and \sigma^2 = np(1-p)
+    \]
+    \[
+        M_Y(t) = \left[pe^t+(1-p)\right]^n
+    \]
+    \item \defn{$\nbinomdist{Y}{r}{p}$}
+    Observing the fixed $r^{th}$ success in $y \in [r, \infty)$ trials.
+    \[
+        \pr{Y=y} = \binom{y-1}{r-1}p^{r}(1-p)^{y-r} \implies \mu = \frac{r}{p} \and \sigma^2 = \frac{r(1-p)}{p^2}
+    \]
+    \[
+        M_Y(t) = {\left[\frac{pe^t}{1-(1-p)e^t}\right]}^r
+    \]
+    \item \defn{$\geodist{Y}{p} = \operatorname{NB}(1,p)$}
+    Observing 1 success in $y \in [1, \infty)$ trials.
+    \[
+        \pr{Y=y} = (1-p)^{y-1}p \implies \mu = \frac{1}{p} \and \sigma^2 = \frac{1-p}{p^2}
+    \]
+    \[
+        M_Y(t) = \frac{pe^t}{1-(1-p)e^t}
+    \]
+    \item \defn{$\hypegeodist{Y}{N}{r}{n}$}
+    Observing $y \in \begin{cases}
+        [0, n] \If{} n \leq r,\\
+        [0, r] \If{} n > r
+    \end{cases}$ successes in $n$ draws, without replacement,
+    from a population of $N$ that contains $r$ success states.
+    \[
+        \pr{Y=y} = \frac{\binom{r}{y}\binom{N-r}{n-y}}{\binom{N}{n}}
+        \implies \mu = \frac{r\cdot n}{N} \and \sigma^2 = 
+        n\left(\frac{r}{N}\right)\left(\frac{N-r}{N}\right)\left(\frac{N-n}{N-1}\right)
+    \]
+
+    \item \defn{$\poisson{Y}{\lambda}$}
+    Observing $y\in [0,\infty)$ indepedent events that occur with a
+    constant mean rate of $\lambda$ in a fixed interval of time or area.
+    Note: $\poisson{Y}{n\cdot p} = \binomdist{Y}{n}{p}$ if $n$ is very large, or $p$ is small.
+    That is to say, it may be used to approximate the binomial distribution.
+    \[
+        \pr{Y=y} = \frac{\lambda^{y}e^{-\lambda}}{y!} \implies \mu = \lambda \and \sigma^2 = \lambda
+    \]
+    \[
+        M_Y(t) = e^{\lambda(e^t-1)}
+    \]
+\end{itemize}
+
+
+\clearpage
+\section{Continuous Distributions Dictionary (ADD CDFs)}
+\begin{itemize}
+    \item \defn{$\unidist{Y}{a}{b}$}
+    \begin{gather}
+        f_Y(y) = \frac{1}{b-a} \and F_Y(y) = \frac{y}{b-a}; \enspace y \in [a,b]\\
+        \mu = \frac{a+b}{2} \and \sigma^2 = \frac{(b-a)^2}{12}\\
+        M_Y(t) = \frac{e^{tb} - e^{ta}}{t(b-a)}
+    \end{gather}
+
+    \item \defn{$\normdist{Y}{\mu}{\sigma^2}$}
+    \begin{gather}
+        f_Y(y) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left[ -\frac{(y-\mu)^2}{2\sigma^2} \right];
+        \enspace y\in(\pm \infty)
+        \implies \mu = \mu \and \sigma^2 = \sigma^2\\
+        M_Y(t) = \exp\left[ \mu t + \frac{t^2\sigma^2}{2} \right]
+    \end{gather}
+
+    \item \defn{$\gamdist{Y}{\alpha}{\beta}$}
+    \begin{gather}
+        f_Y(y) = \frac{y^{\alpha-1}\exp\left[ -y\beta^{-1} \right]}{\Gamma(\alpha)\beta^\alpha};
+        \enspace y\in (0, \infty)
+        \implies \mu = \alpha\beta \and \sigma^2 = \alpha\beta^2\\
+        M_Y(t) = (1-\beta t)^{-\alpha}
+    \end{gather}
+
+    \item \defn{$\expdist{Y}{\beta} = \gamdist{Y}{1}{\beta}$}
+    \footnote{Memoryless property: $\pr{Y > y + \alpha \mid Y > \alpha} = \pr{Y > y}$}
+    \begin{gather}
+        f_Y(y) = \beta^{-1}\exp\left[ -y\beta^{-1} \right] \and F_Y(y) = \exp(-y/\beta);
+        \enspace y\in (0, \infty)\\
+        \implies \mu = \beta \and \sigma^2 = \beta^2\\
+        M_Y(t) = (1-\beta t)^{-1}
+    \end{gather}
+
+    \item \defn{$\chidist{Y}{\nu} = \gamdist{Y}{\nu/2}{2}$}
+    \begin{gather}
+        f_Y(y) = \frac{y^{\nu/2-1}\exp\left[ -y/2 \right]  }{\Gamma(\nu/2)2^{\nu/2}};
+        \enspace y^2 > 0
+        \implies \mu = \nu \and \sigma^2 = 2\nu\\
+        M_Y(t) = (1-2t)^{-\nu/2}
+    \end{gather}
+    \item \defn{$\betdist{Y}{\alpha}{\beta}$}
+    \begin{gather}
+        f_Y(y) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}y^{\alpha - 1}(1-y)^{\beta - 1};
+        \enspace y\in (0,1)
+        \implies \mu = \frac{\alpha}{\alpha + \beta} \and \sigma^2 = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha + \beta + 1)}
+    \end{gather}
+\end{itemize}
+
+\subsection{Special Cases}
+\begin{itemize}
+    \item $\chidist{Y}{1} = \left[ \normdist{Y}{0}{1} \right]^2$
+    \item $\betdist{Y}{1}{1} = \unidist{Y}{0}{1}$
+\end{itemize}
+
+\subsection{Sum of Independent Distributions $(Y_1, Y_2)$}
+\begin{itemize*}
+    \item $\normdist{Y_1 + Y_2}{\mu_1 + \mu_2}{\sigma_1^2 + \sigma_2^2}$
+
+    \item $\poisson{Y_1 + Y_2}{\mu_1 + \mu_2}$
+
+    \item $\binomdist{Y_1 + Y_2}{n_1 + n_2}{p}$
+\end{itemize*}
+
+\subsection{Gamma Function}
+\begin{align*}
+    \Gamma(\alpha) = \intv{ y^{\alpha - 1}e^{-y} }{y}{0}{\infty}\
+    \and \Gamma(k\in\ns{N}) = (k-1)!
+\end{align*}
+\subsection{Standardizing the Normal Distribution}
+If $\normdist{Y}{\mu}{\sigma^2} \implies $ \[
+    \normdist{Z = \frac{Y - \mu}{\sigma}}{0}{1}
+\]
+
+
+
+\end{document}

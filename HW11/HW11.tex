@@ -98,10 +98,101 @@
   \end{enumerate}
 
   \item $Y = \unidist{\set{Y_1, Y_2, \ldots ,Y_5}\iid}{0}{1}$\\
-  $\pr{ 1/4 < Y_{\phi_{0.5}} < 3/4 } = \pr{1/4 < Y_3 <\frac{3}{4}} = F_{Y(3)}(3/4) - F_{Y(3)}(1/4)$ \[
-    \frac{5!}{(3-1)!(5-3)!}\intv{F_Y(y)^{3-1}\left[ 1-F_Y(y) \right]^{5-3}f_Y(y)}{y}{1/4}{3/4}
+  $\pr{ 1/4 < Y_{\phi_{0.5}} < 3/4 } = \pr{1/4 < Y_3 <\frac{3}{4}} = F_{Y(3)}(3/4) - F_{Y(3)}(1/4) = $ \begin{align*}
+    &\frac{5!}{(3-1)!(5-3)!}\intv{F_Y(y)^{3-1}\left[ 1-F_Y(y) \right]^{5-3}f_Y(y)}{y}{1/4}{3/4}
     = 30\intv{F_Y(y)^{2}\left[ 1-F_Y(y) \right]^{2}f_Y(y)}{y}{1/4}{3/4}
+    \\&= 30\intv{y^2(1-y)^2\cdot 1}{y}{1/4}{3/4}
+    = 30\intv{y^2-2y^3+y^4}{y}{1/4}{3/4}
+    = 30\left[ \frac{1}{3}y^3 - \frac{2}{4}y^4 + \frac{1}{5}y^5 \right]_{1/4}^{3/4} = \frac{203}{256}
+  \end{align*}
+
+  \item \begin{theorem}
+    If $\unidist{\set{Y_1, \ldots , Y_n}}{0}{\theta = 1} \implies \betdist{Y_{(k)}}{\alpha}{\beta}$
+  \end{theorem}
+  \begin{proof}
+    We first find the pdf of the $k^{\text{th}}$ order statistic. We know that
+    \[
+      f_Y(y) = 1 \text{ and } F_Y(y) = y
+    \]
+    then,
+    \[
+      f_{Y(k)}(y) = \frac{n!}{(k-1)!(n-k)!}\left[F_Y(y)\right]^{k-1}\left[ 1-F_Y(y) \right]^{n-k}
+      = \frac{n!}{(k-1)!(n-k)!}y^{k-1}\left( 1-y \right)^{n-k}
+    \]
+    A random variable $\betdist{Y}{\alpha}{\beta}$
+    iff its pdf is \[
+      f_Y(y) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}y^{\alpha - 1}(1-y)^{\beta - 1}
+    \]
+    Then, we must have that $\alpha = k$ and $\beta = n-k+1 \implies \betdist{Y_{(k)}}{k}{n-k+1}$
+  \end{proof}
+
+  \item $\normdist{G_k}{14}{2^2}$
+  \begin{enumerate}
+    \item Let $G = \set{G_1, \ldots, G_{100}}$.
+    We want to know \[
+      \pr{\overline{G} > 14.5} = \pr{Z > \frac{14.5 - 14}{2/\sqrt{100}}} = .0062 
+    \]
+    \item $\pr{g_1 <\overline{G} < g_2} = 0.95$\\
+    We have that
+    \[
+      \pr{g_1 <\overline{G} < g_2} = \pr{\frac{g_1 - 14}{2/\sqrt{100}} < Z < \frac{g_2 - 14}{2/\sqrt{100}}} = 0.95
+    \]
+    An interval corresponding to $0.95$ means that at either side, we have $2.5\%$ is excluded. Then, \[
+      \pr{Z > z_2} = 0.025 \implies z_2 = 1.96 \implies \pr{-1.96 < Z < 1.96} = 0.95
+    \]
+    So, $\frac{g_1 - 14}{2/\sqrt{100}} = -1.96 \implies g_1 = -1.96\cdot(2/\sqrt{100})+14 = 13.608$, and\\
+    $\frac{g_2 - 14}{2/\sqrt{100}} = 1.96 \implies g_2 = 1.96\cdot(2/\sqrt{100})+14 = 14.392$.
+  \end{enumerate}
+
+  \item $n = 100, \mu = \mu,\sigma = 2.5 
+  \implies H=\normdist{\set{H_k: k\in [1,100]} \iid }{\mu}{2.5^2}$\\
+  $\pr{|\overline{H} - \mu| < 0.5} = $ \[
+    \pr{\frac{-0.5}{\sigma/\sqrt{n}} < \frac{\overline{H} - \mu}{\sigma/\sqrt{n}} < \frac{0.5}{\sigma/\sqrt{n}}} 
+    = \pr{-2 < Z < 2} = 2(\pr{Z > 0} - \pr{Z > 2}) = 0.9544
   \]
+
+  \item $C=\normdist{\set{C_1, \ldots, C_{36}} \iid}{19400}{6000^2}$\\
+  $\pr{\overline{C}> 20,000} = $ \[
+    \pr{Z > \frac{20000-19400}{6000/\sqrt{36}}} = 0.2743
+  \]
+
+  \item $C = \normdist{\set{C_1, \ldots, C_{2025}}}{3125}{540^2}$\\
+  $\pr{c_1 < \overline{C} < c_2} = 0.95 = $ \[
+    \pr{\frac{c_1 - 3125}{540/\sqrt{2025}} < Z < \frac{c_2 - 3125}{540/\sqrt{2025}}} = 0.95 \implies 
+    \frac{c_1 - 3125}{540/\sqrt{2025}} = -1.96 \text{ and }
+    \frac{c_2 - 3125}{540/\sqrt{2025}} = 1.96
+  \]
+  Then, $c_1 = 3148.52, c_2 = 3101.48$.
+
+  \item $\pr{I} = 1/7$; $P = \binomdist{\sum_{k=1}^{612}P_k}{612}{\pr{I}}$\\
+  Let $np = 612\pr{I}$, then $\pr{90 < P < 150} = $ \[
+    \pr{\frac{90 - np}{\sqrt{np(1-\pr{I})}} < Z < \frac{150 - np}{\sqrt{np(1-\pr{I})}}}
+    = \pr{0.2970 - \frac{1}{2} < Z < 7.2281 + \frac{1}{2}} = 0.5804
+  \]
+
+  \item $n = 160, p = 0.05$ 
+  \begin{enumerate}
+    \item $\binomdist{Y}{160}{0.05} 
+    \implies \pr{Y \leq 5} = \sum_{y=0}^{5}\binom{160}{y}p^{y}(1-p)^{160-y} = 0.184224295731$
+    \item $\poisson{Y}{160 \cdot 0.05} 
+    \implies \pr{Y \leq 5} = \sum_{y=0}^{5}\frac{\lambda^{y}e^{-\lambda}}{y!} = 0.19123606208$
+    \item $\pr{Y \leq 5} = \pr{Z \leq \frac{5 - np}{\sqrt{np(1-p)}} + \frac{1}{2}} = 0.2810$
+  \end{enumerate}
 \end{enumerate}
+
+\[
+  e = \begin{cases}
+    d_{1h}\coloneq D_1(h) + K_1h + K_2h^2\\
+    d_{2h}\coloneq D_1(2h) + 2K_1h + 4K_2h^2\\
+    d_{3h}\coloneq D_1(3h) + 3K_1h + 9K_2h^2
+  \end{cases} 
+  \implies e = \alpha d_{1h} + \beta d_{2h} + \gamma d_{3h}
+  \implies \begin{cases}
+    \alpha + \beta + \gamma = 1\\
+    \alpha + 2\beta + 3\gamma = 0\\
+    \alpha + 4\beta + 9\gamma = 0
+  \end{cases}
+\]
+$\therefore \alpha = 3, \beta = -3, \gamma = 1$
 
 \end{document}
